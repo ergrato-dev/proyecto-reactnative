@@ -102,6 +102,8 @@ export type APODStackParamList = {
 export type ProfileStackParamList = {
   /** Pantalla de autenticación con Supabase */
   Auth: undefined;
+  /** Pantalla de registro de nuevo usuario */
+  Register: undefined;
   /** Diario personal de observaciones */
   ObservationLog: undefined;
 };

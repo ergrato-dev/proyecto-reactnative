@@ -2,17 +2,18 @@
  * Stack Navigator de la tab "Perfil".
  *
  * @what Define el flujo de navegación dentro de la tab Perfil:
- *   Auth → ObservationLog.
- * @why Encapsula el stack de autenticación; en Fase 10 se reemplazarán
- *   las pantallas placeholder por el flujo real con Supabase.
+ *   Auth → Register | Auth → ObservationLog.
+ * @why Encapsula el stack de autenticación con las pantallas reales
+ *   del módulo auth (Supabase + biometría + diario de observaciones).
  * @impact Rutas corresponden a `ProfileStackParamList`.
  */
 
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { ProfileStackParamList } from '../types';
-import { AuthScreen } from '../screens/AuthScreen';
-import { ObservationLogScreen } from '../screens/PlaceholderScreens';
+import { LoginScreen } from '@/modules/auth/screens/LoginScreen';
+import { RegisterScreen } from '@/modules/auth/screens/RegisterScreen';
+import { ObservationsScreen } from '@/modules/auth/screens/ObservationsScreen';
 
 const Stack = createNativeStackNavigator<ProfileStackParamList>();
 
@@ -31,12 +32,17 @@ export function ProfileStack() {
     <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen
         name="Auth"
-        component={AuthScreen}
+        component={LoginScreen}
         options={{ title: 'Mi Perfil' }}
       />
       <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{ title: 'Crear cuenta' }}
+      />
+      <Stack.Screen
         name="ObservationLog"
-        component={ObservationLogScreen}
+        component={ObservationsScreen}
         options={{ title: 'Diario de Observaciones' }}
       />
     </Stack.Navigator>

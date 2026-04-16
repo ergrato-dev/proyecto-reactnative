@@ -107,7 +107,7 @@ export const MODULE_CATALOG: ModuleCatalogItem[] = [
     id: 'auth',
     name: 'Autenticación',
     astronomicalUseCase: 'Perfil de observador con diario en Supabase',
-    platforms: { android: 'pending', web: 'pending', ios: 'pending' },
+    platforms: { android: 'ready', web: 'pending', ios: 'pending' },
     phase: 10,
   },
   {
