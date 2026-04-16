@@ -19,12 +19,9 @@ import { ArtemisStack } from './ArtemisStack';
 import { NotificationsStack } from './NotificationsStack';
 import { StarMapScreen } from '@/modules/sensors';
 import { OrbitScreen } from '@/modules/animations';
+import { PlatformShowcaseScreen } from '@/modules/platform';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
-
-// ─── Pantallas placeholder del Drawer ────────────────────────────────────────
-
-
 
 /** Pantalla temporal para el módulo de cámara */
 function CameraScreen() {
@@ -38,7 +35,7 @@ function CameraScreen() {
 }
 
 /** Pantalla temporal para diferencias de plataforma */
-function PlatformScreen() {
+function PlatformPlaceholder() {
   return (
     <View style={styles.placeholder}>
       <Text style={styles.icon}>📱</Text>
@@ -98,7 +95,7 @@ export function RootDrawerNavigator() {
       />
       <Drawer.Screen
         name="Platform"
-        component={PlatformScreen}
+        component={PlatformShowcaseScreen}
         options={{ title: '📱 Plataforma' }}
       />
       {/* Módulo Notificaciones: alertas solares y scheduling local */}

@@ -240,13 +240,13 @@
 > **Caso de uso astronómico:** comparativa Android/Web/iOS  
 > **RF:** RF-PLAT-01 al RF-PLAT-03 | **HU:** HU-14
 
-- [ ] Pantalla comparativa: permisos, APIs disponibles, diferencias de UI
-- [ ] ActionSheet nativo iOS vs. BottomSheet Android
-- [ ] Responsivo Web: 320 px → 1440 px
-- [ ] Snippets de código comentados en cada diferencia
-- [ ] Tests: render en cada plataforma (mock Platform.OS)
-- [ ] Cobertura ≥ 80%
-- [ ] Commit: `feat(platform): platform differences showcase with responsive web layout`
+- [x] Pantalla comparativa: permisos, APIs disponibles, diferencias de UI
+- [x] ActionSheet nativo iOS vs. BottomSheet Android
+- [x] Responsivo Web: 320 px → 1440 px
+- [x] Snippets de código comentados en cada diferencia
+- [x] Tests: render en cada plataforma (mock Platform.OS)
+- [x] Cobertura ≥ 80%
+- [x] Commit: `feat(platform): platform differences showcase with responsive web layout`
 
 ---
 
@@ -306,9 +306,9 @@
 | 6 | Artemis (missions + gallery) | ✅ Completo |
 | 7 | Notificaciones | ✅ Completo |
 | 8 | Star Map (sensors) | ✅ Completo |
-| 9 | Auth + Perfil | ⬜ Pendiente |
+| 9 | Auth + Perfil | ✅ Completo |
 | 10 | Animaciones | ✅ Completo |
-| 11 | Platform showcase | ⬜ Pendiente |
+| 11 | Platform showcase | ✅ Completo |
 | 12 | Cámara AR ⚡ | ⬜ Stretch goal |
 | 13 | Pulido y entrega | ⬜ Pendiente |
 

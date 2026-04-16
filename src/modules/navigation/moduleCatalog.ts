@@ -121,7 +121,7 @@ export const MODULE_CATALOG: ModuleCatalogItem[] = [
     id: 'platform',
     name: 'Plataforma',
     astronomicalUseCase: 'Diferencias Android/Web/iOS en permisos y sensores',
-    platforms: { android: 'pending', web: 'pending', ios: 'pending' },
+    platforms: { android: 'ready', web: 'ready', ios: 'pending' },
     phase: 12,
   },
 ];
