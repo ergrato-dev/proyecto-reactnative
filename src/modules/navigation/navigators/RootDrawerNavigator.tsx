@@ -34,17 +34,6 @@ function CameraScreen() {
   );
 }
 
-/** Pantalla temporal para diferencias de plataforma */
-function PlatformPlaceholder() {
-  return (
-    <View style={styles.placeholder}>
-      <Text style={styles.icon}>📱</Text>
-      <Text style={styles.title}>Plataforma</Text>
-      <Text style={styles.subtitle}>Android / Web / iOS — Fase 12</Text>
-    </View>
-  );
-}
-
 // ─── Navegador raíz ───────────────────────────────────────────────────────────
 
 /**

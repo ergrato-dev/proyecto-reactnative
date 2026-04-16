@@ -2,10 +2,11 @@
  * Módulo `maps/` — Rastreo ISS en tiempo real.
  *
  * @what Pantalla con mapa interactivo que muestra la posición de la ISS en
- *   tiempo real (polling cada 5 s), traza su trayectoria orbital y lista la
- *   tripulación actual en el espacio.
- * @why Demuestra `react-native-maps`, polling con TanStack Query y combinación
- *   de datos de múltiples endpoints de Open-Notify dentro de un mismo módulo.
+ *   tiempo real (polling cada 5 s), traza su trayectoria orbital, lista la
+ *   tripulación actual en el espacio y difunde la posición a todos los
+ *   clientes conectados vía Supabase Realtime.
+ * @why Demuestra `react-native-maps`, polling con TanStack Query, Supabase
+ *   Realtime WebSocket y reconexión automática ante pérdidas de red.
  * @impact Requiere `android:usesCleartextTraffic` en app.json (ya configurado)
  *   porque la API Open-Notify sirve HTTP. En Web se muestra un fallback con
  *   coordenadas numéricas ya que `react-native-maps` no soporta react-native-web.
@@ -23,6 +24,8 @@ import {
 import type { ISSMapScreenProps } from '@/modules/navigation/types';
 import { useIssPosition } from '../hooks/useIssPosition';
 import type { IssCoordinates } from '../hooks/useIssPosition';
+import { useIssRealtime } from '@/modules/realtime/hooks/useIssRealtime';
+import { useNetworkReconnect } from '@/modules/realtime/hooks/useNetworkReconnect';
 
 // react-native-maps no tiene soporte web; se importa condicionalmente
 // para evitar errores de compilación en la plataforma web.
@@ -141,7 +144,23 @@ function WebFallback({ coordinates }: { coordinates: IssCoordinates | null }) {
  * @param props - Props de navegación del ISSStack
  */
 export function ISSMapScreen({ navigation }: ISSMapScreenProps) {
-  const { coordinates, isLoading, isError } = useIssPosition();
+  const { coordinates: pollingCoordinates, isLoading, isError } = useIssPosition();
+  const { realtimePosition, isSubscribed, publishPosition } = useIssRealtime();
+
+  // Usar la posición Realtime si está disponible; si no, la del polling
+  const coordinates = realtimePosition ?? pollingCoordinates;
+
+  // Reconexión automática: cuando se recupera la red el hook de Realtime
+  // gestiona la re-suscripción internamente. useNetworkReconnect
+  // permite mostrar feedback visual si se necesita en el futuro.
+  useNetworkReconnect();
+
+  // Publicar la posición de polling en Supabase para difundirla a todos los clientes
+  useEffect(() => {
+    if (!pollingCoordinates || !isSubscribed) return;
+    // Publicar de forma no bloqueante; errores se suprimen para no interrumpir el mapa
+    publishPosition(pollingCoordinates).catch(() => undefined);
+  }, [pollingCoordinates, isSubscribed, publishPosition]);
 
   // Historial de posiciones para trazar la trayectoria
   const trajectoryRef = useRef<LatLng[]>([]);
@@ -275,6 +294,12 @@ export function ISSMapScreen({ navigation }: ISSMapScreenProps) {
         ) : (
           <Text style={styles.coordText}>Calculando…</Text>
         )}
+        <Text
+          style={[styles.realtimeBadge, isSubscribed && styles.realtimeBadgeActive]}
+          testID="realtime-badge"
+        >
+          {isSubscribed ? '● Realtime' : '○ Polling'}
+        </Text>
       </View>
 
       {/* Botón "ver tripulación" */}
@@ -334,6 +359,14 @@ const styles = StyleSheet.create({
     color: '#e8eaf6',
     fontSize: 12,
     fontFamily: 'monospace',
+  },
+  realtimeBadge: {
+    color: '#90a4ae',
+    fontSize: 10,
+    marginTop: 4,
+  },
+  realtimeBadgeActive: {
+    color: '#4fc3f7',
   },
   crewButton: {
     position: 'absolute',

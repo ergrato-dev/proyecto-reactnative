@@ -32,6 +32,22 @@ jest.mock('../hooks/useIssPosition');
 import { useIssPosition } from '../hooks/useIssPosition';
 const mockUseIssPosition = useIssPosition as jest.Mock;
 
+// ─── Mock de los hooks de realtime ───────────────────────────────────────────
+jest.mock('@/modules/realtime/hooks/useIssRealtime', () => ({
+  useIssRealtime: () => ({
+    realtimePosition: null,
+    isConnecting: false,
+    isSubscribed: false,
+    publishPosition: jest.fn().mockResolvedValue(undefined),
+  }),
+  ISS_REALTIME_CHANNEL: 'iss-realtime',
+  ISS_POSITIONS_TABLE: 'iss_positions',
+}));
+
+jest.mock('@/modules/realtime/hooks/useNetworkReconnect', () => ({
+  useNetworkReconnect: () => ({ isConnected: true, justReconnected: false }),
+}));
+
 /** Props mínimas de navegación */
 function buildNavProps(navigateMock = jest.fn()) {
   return {
