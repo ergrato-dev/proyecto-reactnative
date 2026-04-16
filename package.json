@@ -13,7 +13,9 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@supabase/supabase-js": "2.103.2",
     "expo": "55.0.15",
+    "expo-secure-store": "55.0.13",
     "expo-status-bar": "55.0.5",
     "react": "19.2.5",
     "react-native": "0.83.5"
