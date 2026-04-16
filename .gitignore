@@ -1,0 +1,81 @@
+# ─── Dependencias ────────────────────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+
+# ─── Variables de entorno (credenciales Supabase y secretos) ─────────────────
+.env
+.env.local
+.env.development
+.env.production
+.env.staging
+.env.*.local
+
+# ─── Expo ─────────────────────────────────────────────────────────────────────
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# ─── React Native ─────────────────────────────────────────────────────────────
+# Archivos generados por Metro bundler
+.metro-cache/
+
+# Android
+android/
+!android/gradle.properties
+
+# iOS
+ios/
+
+# ─── Build outputs ────────────────────────────────────────────────────────────
+build/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# ─── EAS (Expo Application Services) ─────────────────────────────────────────
+.easignore
+
+# ─── Testing y cobertura ──────────────────────────────────────────────────────
+coverage/
+.jest-cache/
+
+# ─── TypeScript ───────────────────────────────────────────────────────────────
+*.tsbuildinfo
+
+# ─── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ─── Sistema operativo ────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+desktop.ini
+
+# ─── Editores e IDEs ──────────────────────────────────────────────────────────
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# ─── pnpm ─────────────────────────────────────────────────────────────────────
+# El lockfile SÍ se commitea para reproducibilidad
+# pnpm-lock.yaml → NO ignorar
+
+# ─── Supabase local (CLI) ─────────────────────────────────────────────────────
+supabase/.branches/
+supabase/.temp/

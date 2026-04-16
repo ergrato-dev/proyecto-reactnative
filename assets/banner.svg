@@ -1,0 +1,269 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="1200" height="340">
+  <defs>
+
+    <!-- Fondo espacial: gradiente profundo de izquierda a derecha -->
+    <linearGradient id="sky" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#020818"/>
+      <stop offset="40%" stop-color="#050d24"/>
+      <stop offset="100%" stop-color="#0a0520"/>
+    </linearGradient>
+
+    <!-- Nebulosa izquierda: azul-cian difusa -->
+    <radialGradient id="nebula-left" cx="20%" cy="55%" r="38%">
+      <stop offset="0%" stop-color="#0d4f8a" stop-opacity="0.55"/>
+      <stop offset="60%" stop-color="#0a2a5c" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#020818" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Nebulosa derecha: violeta-magenta difusa -->
+    <radialGradient id="nebula-right" cx="82%" cy="40%" r="32%">
+      <stop offset="0%" stop-color="#5b0fa8" stop-opacity="0.5"/>
+      <stop offset="55%" stop-color="#2d0660" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#020818" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Planeta principal: naranja-tostado tipo Saturno -->
+    <radialGradient id="planet-body" cx="38%" cy="32%" r="60%">
+      <stop offset="0%" stop-color="#f5c97a"/>
+      <stop offset="35%" stop-color="#e89040"/>
+      <stop offset="70%" stop-color="#b85818"/>
+      <stop offset="100%" stop-color="#6b2a08"/>
+    </radialGradient>
+
+    <!-- Brillo especular en el planeta -->
+    <radialGradient id="planet-gloss" cx="35%" cy="28%" r="40%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Anillos del planeta: degradado radial dorado -->
+    <linearGradient id="ring-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c87d2a" stop-opacity="0.15"/>
+      <stop offset="18%" stop-color="#e8aa55" stop-opacity="0.7"/>
+      <stop offset="35%" stop-color="#f5d080" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#fae8a8" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#f5d080" stop-opacity="0.9"/>
+      <stop offset="82%" stop-color="#e8aa55" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#c87d2a" stop-opacity="0.15"/>
+    </linearGradient>
+
+    <!-- Planeta pequeño azul (tipo Neptuno) -->
+    <radialGradient id="planet-blue" cx="35%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#6ec0f5"/>
+      <stop offset="50%" stop-color="#1a6fc4"/>
+      <stop offset="100%" stop-color="#092d6b"/>
+    </radialGradient>
+
+    <!-- Planeta enano blanco-perla -->
+    <radialGradient id="planet-pearl" cx="38%" cy="32%" r="55%">
+      <stop offset="0%" stop-color="#e8eef8"/>
+      <stop offset="55%" stop-color="#a0b4d8"/>
+      <stop offset="100%" stop-color="#4a5e8a"/>
+    </radialGradient>
+
+    <!-- Texto CosmosRN: gradiente dorado-blanco -->
+    <linearGradient id="title-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="40%" stop-color="#f0e0b0"/>
+      <stop offset="100%" stop-color="#c8960a"/>
+    </linearGradient>
+
+    <!-- Sombra suave para el texto principal -->
+    <filter id="text-glow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Resplandor suave para el planeta -->
+    <filter id="planet-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Resplandor para estrellas brillantes -->
+    <filter id="star-glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Clip del banner completo -->
+    <clipPath id="banner-clip">
+      <rect width="1200" height="340" rx="18"/>
+    </clipPath>
+
+  </defs>
+
+  <!-- ── FONDO ── -->
+  <g clip-path="url(#banner-clip)">
+    <rect width="1200" height="340" rx="18" fill="url(#sky)"/>
+    <rect width="1200" height="340" fill="url(#nebula-left)"/>
+    <rect width="1200" height="340" fill="url(#nebula-right)"/>
+
+    <!-- ── ESTRELLAS PEQUEÑAS (fondo difuso) ── -->
+    <g opacity="0.6">
+      <circle cx="42" cy="18" r="0.8" fill="#fff"/>
+      <circle cx="115" cy="52" r="0.6" fill="#d0e8ff"/>
+      <circle cx="178" cy="12" r="1" fill="#fff"/>
+      <circle cx="230" cy="75" r="0.7" fill="#fff"/>
+      <circle cx="295" cy="28" r="0.9" fill="#ffe8c0"/>
+      <circle cx="355" cy="62" r="0.6" fill="#fff"/>
+      <circle cx="410" cy="15" r="0.8" fill="#c0d8ff"/>
+      <circle cx="480" cy="45" r="0.7" fill="#fff"/>
+      <circle cx="540" cy="22" r="1" fill="#fff"/>
+      <circle cx="590" cy="80" r="0.6" fill="#ffe0b0"/>
+      <circle cx="650" cy="18" r="0.9" fill="#fff"/>
+      <circle cx="710" cy="55" r="0.7" fill="#d8f0ff"/>
+      <circle cx="760" cy="12" r="0.8" fill="#fff"/>
+      <circle cx="820" cy="70" r="0.6" fill="#fff"/>
+      <circle cx="890" cy="25" r="1" fill="#fff"/>
+      <circle cx="940" cy="55" r="0.7" fill="#ffe8c0"/>
+      <circle cx="998" cy="15" r="0.8" fill="#fff"/>
+      <circle cx="1050" cy="65" r="0.6" fill="#c8e8ff"/>
+      <circle cx="1110" cy="30" r="0.9" fill="#fff"/>
+      <circle cx="1160" cy="72" r="0.7" fill="#fff"/>
+      <!-- fila media -->
+      <circle cx="65" cy="140" r="0.7" fill="#fff"/>
+      <circle cx="130" cy="180" r="0.6" fill="#ffe0b0"/>
+      <circle cx="200" cy="155" r="0.8" fill="#fff"/>
+      <circle cx="275" cy="195" r="0.6" fill="#d0e0ff"/>
+      <circle cx="340" cy="160" r="0.7" fill="#fff"/>
+      <circle cx="470" cy="175" r="0.6" fill="#fff"/>
+      <circle cx="560" cy="145" r="0.8" fill="#fff"/>
+      <circle cx="680" cy="165" r="0.7" fill="#ffe8c0"/>
+      <circle cx="785" cy="185" r="0.6" fill="#fff"/>
+      <circle cx="870" cy="148" r="0.8" fill="#fff"/>
+      <circle cx="960" cy="172" r="0.6" fill="#d8f0ff"/>
+      <circle cx="1040" cy="155" r="0.7" fill="#fff"/>
+      <circle cx="1130" cy="178" r="0.6" fill="#fff"/>
+      <!-- fila baja -->
+      <circle cx="55" cy="270" r="0.7" fill="#fff"/>
+      <circle cx="140" cy="295" r="0.6" fill="#ffe0c0"/>
+      <circle cx="220" cy="258" r="0.8" fill="#fff"/>
+      <circle cx="320" cy="305" r="0.6" fill="#fff"/>
+      <circle cx="430" cy="285" r="0.7" fill="#d0e8ff"/>
+      <circle cx="520" cy="310" r="0.6" fill="#fff"/>
+      <circle cx="640" cy="270" r="0.8" fill="#fff"/>
+      <circle cx="750" cy="300" r="0.6" fill="#ffe8c0"/>
+      <circle cx="850" cy="275" r="0.7" fill="#fff"/>
+      <circle cx="940" cy="308" r="0.6" fill="#fff"/>
+      <circle cx="1020" cy="265" r="0.8" fill="#c8e8ff"/>
+      <circle cx="1100" cy="298" r="0.6" fill="#fff"/>
+      <circle cx="1175" cy="260" r="0.7" fill="#fff"/>
+    </g>
+
+    <!-- ── ESTRELLAS BRILLANTES con resplandor ── -->
+    <g filter="url(#star-glow)">
+      <circle cx="88" cy="90" r="2" fill="#ffffff"/>
+      <circle cx="195" cy="220" r="1.8" fill="#e8f4ff"/>
+      <circle cx="312" cy="42" r="2.2" fill="#ffffff"/>
+      <circle cx="445" cy="108" r="1.6" fill="#fff8e0"/>
+      <circle cx="522" cy="270" r="2" fill="#ffffff"/>
+      <circle cx="630" cy="42" r="1.8" fill="#e0f0ff"/>
+      <circle cx="742" cy="240" r="2.2" fill="#ffffff"/>
+      <circle cx="825" cy="62" r="1.6" fill="#fff8e0"/>
+      <circle cx="912" cy="298" r="2" fill="#ffffff"/>
+      <circle cx="1062" cy="88" r="2.2" fill="#e8f4ff"/>
+      <circle cx="1148" cy="220" r="1.8" fill="#ffffff"/>
+    </g>
+
+    <!-- ── ESTRELLA DESTELLO (tipo cruz de 4 puntas) ── -->
+    <g transform="translate(1100, 55)" opacity="0.9">
+      <line x1="0" y1="-12" x2="0" y2="12" stroke="#ffffff" stroke-width="1.2" opacity="0.6"/>
+      <line x1="-12" y1="0" x2="12" y2="0" stroke="#ffffff" stroke-width="1.2" opacity="0.6"/>
+      <line x1="-7" y1="-7" x2="7" y2="7" stroke="#ffffff" stroke-width="0.6" opacity="0.3"/>
+      <line x1="7" y1="-7" x2="-7" y2="7" stroke="#ffffff" stroke-width="0.6" opacity="0.3"/>
+      <circle cx="0" cy="0" r="2.5" fill="#ffffff"/>
+    </g>
+    <g transform="translate(88, 90)" opacity="0.8">
+      <line x1="0" y1="-9" x2="0" y2="9" stroke="#ffffff" stroke-width="1" opacity="0.5"/>
+      <line x1="-9" y1="0" x2="9" y2="0" stroke="#ffffff" stroke-width="1" opacity="0.5"/>
+      <circle cx="0" cy="0" r="1.8" fill="#ffffff"/>
+    </g>
+
+    <!-- ── ÓRBITAS ELÍPTICAS (finas, semitransparentes) ── -->
+    <!-- Órbita grande del planeta principal -->
+    <ellipse cx="188" cy="195" rx="155" ry="52" fill="none" stroke="#4080c0" stroke-width="0.8" stroke-opacity="0.22" stroke-dasharray="6 4"/>
+    <!-- Órbita planeta azul -->
+    <ellipse cx="188" cy="195" rx="210" ry="72" fill="none" stroke="#60a0e0" stroke-width="0.7" stroke-opacity="0.16" stroke-dasharray="4 6"/>
+    <!-- Órbita planeta enano -->
+    <ellipse cx="188" cy="195" rx="100" ry="34" fill="none" stroke="#8090b8" stroke-width="0.6" stroke-opacity="0.18" stroke-dasharray="3 5"/>
+
+    <!-- ── PLANETA ENANO (perla, pequeño, sobre la órbita pequeña) ── -->
+    <circle cx="260" cy="166" r="11" fill="url(#planet-pearl)" filter="url(#planet-glow)"/>
+    <circle cx="257" cy="163" r="4" fill="#ffffff" opacity="0.12"/>
+
+    <!-- ── PLANETA AZUL (tipo Neptuno, mediano) ── -->
+    <circle cx="375" cy="142" r="18" fill="url(#planet-blue)" filter="url(#planet-glow)"/>
+    <circle cx="371" cy="138" r="7" fill="#ffffff" opacity="0.10"/>
+    <!-- Banda atmosférica sutil -->
+    <ellipse cx="375" cy="145" rx="18" ry="5" fill="none" stroke="#a0d8f8" stroke-width="1.2" stroke-opacity="0.18"/>
+
+    <!-- ── PLANETA SATURNO (protagonista) ── -->
+    <!-- Mitad trasera del anillo (detrás del planeta) -->
+    <ellipse cx="168" cy="200" rx="92" ry="22" fill="none" stroke="url(#ring-grad)" stroke-width="11" stroke-opacity="0.72" clip-path="url(#ring-back)"/>
+    <!-- Cuerpo del planeta -->
+    <circle cx="168" cy="200" r="62" fill="url(#planet-body)" filter="url(#planet-glow)"/>
+    <!-- Bandas atmosféricas horizontales -->
+    <ellipse cx="168" cy="188" rx="62" ry="8" fill="none" stroke="#c87028" stroke-width="3.5" stroke-opacity="0.20"/>
+    <ellipse cx="168" cy="200" rx="62" ry="5" fill="none" stroke="#a85018" stroke-width="2.5" stroke-opacity="0.18"/>
+    <ellipse cx="168" cy="212" rx="62" ry="7" fill="none" stroke="#d08030" stroke-width="3" stroke-opacity="0.16"/>
+    <!-- Brillo especular -->
+    <circle cx="168" cy="200" r="62" fill="url(#planet-gloss)"/>
+    <!-- Mitad delantera del anillo (encima del planeta) -->
+    <ellipse cx="168" cy="200" rx="92" ry="22" fill="none" stroke="url(#ring-grad)" stroke-width="11" stroke-opacity="0.85">
+      <!-- Clip para mostrar solo la mitad inferior del anillo (frente) -->
+      <animate attributeName="stroke-opacity" values="0.85;0.85" dur="1s" repeatCount="indefinite"/>
+    </ellipse>
+    <!-- Sombra del planeta sobre el anillo -->
+    <ellipse cx="195" cy="196" rx="30" ry="10" fill="#3a1205" opacity="0.38"/>
+
+    <!-- ── LÍNEA DIVISORIA VERTICAL SUTIL ── -->
+    <line x1="430" y1="30" x2="430" y2="310" stroke="#4060a0" stroke-width="0.6" stroke-opacity="0.20" stroke-dasharray="1 8"/>
+
+    <!-- ── TEXTO PRINCIPAL ── -->
+    <!-- Sombra del título -->
+    <text x="510" y="155" font-family="'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="88" font-weight="900" letter-spacing="-2" fill="#0a1840" opacity="0.7">CosmosRN</text>
+    <!-- Título con gradiente dorado -->
+    <text x="506" y="150" font-family="'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="88" font-weight="900" letter-spacing="-2" fill="url(#title-grad)" filter="url(#text-glow)">CosmosRN</text>
+
+    <!-- Subtítulo -->
+    <text x="510" y="192" font-family="'SF Pro Text', 'Helvetica Neue', Arial, sans-serif" font-size="18" font-weight="400" letter-spacing="6" fill="#8ab0e0" opacity="0.88">REACT NATIVE · EXPO · ASTRONOMÍA</text>
+
+    <!-- Línea separadora decorativa -->
+    <line x1="510" y1="210" x2="1150" y2="210" stroke="#2a4880" stroke-width="1" stroke-opacity="0.5"/>
+
+    <!-- Píldoras de módulos (grid 2 columnas) -->
+    <!-- Fila 1 -->
+    <g font-family="'SF Mono', 'Fira Code', monospace" font-size="11.5" fill="#7ab0e0">
+      <!-- Col 1 -->
+      <text x="516" y="240">🪐  navigation  ·  lists  ·  forms</text>
+      <text x="516" y="262">✨  animations  ·  sensors  ·  camera</text>
+      <text x="516" y="284">🛰  maps  ·  realtime  ·  notifications</text>
+      <text x="516" y="306">🔐  auth  ·  storage  ·  platform</text>
+      <!-- Col 2 etiquetas de plataforma -->
+      <g text-anchor="end">
+        <text x="1155" y="240" fill="#3a9060" font-weight="600">Android ✓</text>
+        <text x="1155" y="262" fill="#3060c0" font-weight="600">Web ✓</text>
+        <text x="1155" y="284" fill="#a07030" font-weight="500">iOS →</text>
+        <text x="1155" y="306" fill="#6040a0" font-weight="500" font-size="11">Expo SDK 55</text>
+      </g>
+    </g>
+
+    <!-- ── BORDE DECORATIVO DEL BANNER ── -->
+    <rect width="1200" height="340" rx="18" fill="none" stroke="#1a3060" stroke-width="1.5" stroke-opacity="0.6"/>
+    <!-- Acento superior izquierdo -->
+    <path d="M18,0 L0,18" stroke="#4080c0" stroke-width="1.5" stroke-opacity="0.5" fill="none"/>
+    <!-- Acento superior derecho -->
+    <path d="M1182,0 L1200,18" stroke="#4080c0" stroke-width="1.5" stroke-opacity="0.5" fill="none"/>
+  </g>
+
+</svg>

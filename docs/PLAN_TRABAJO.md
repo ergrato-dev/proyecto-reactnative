@@ -1,0 +1,292 @@
+# Plan de Trabajo — CosmosRN
+
+**Proyecto:** CosmosRN — Showcase app de astronomía básica en React Native  
+**Stack:** Expo SDK 55.0.15 · React Native 0.83 · TypeScript · Supabase · pnpm  
+**Plataformas:** Android → Web → iOS  
+**Última actualización:** Abril 2026
+
+> Marcar cada ítem con `[x]` al completarlo.  
+> Añadir la fecha de cierre al final del ítem: `[x] descripción — ✅ 2026-04-16`
+
+---
+
+## Fase 0 — Fundamentos del proyecto
+
+### 0.1 Documentación base
+- [x] `copilot-instructions.md` con tema astronómico, APIs y stack — ✅ 2026-04-16
+- [x] `.github/instructions/` — modules, testing, supabase, astronomy-apis — ✅ 2026-04-16
+- [x] `.github/prompts/` — new-module, new-api-hook, add-tests, audit-dependencies — ✅ 2026-04-16
+- [x] `docs/requirements/functional.md` — 36 RFs — ✅ 2026-04-16
+- [x] `docs/requirements/non-functional.md` — 32 RNFs — ✅ 2026-04-16
+- [x] `docs/requirements/user-stories.md` — 15 HUs — ✅ 2026-04-16
+- [x] `docs/requirements/constraints.md` — restricciones — ✅ 2026-04-16
+- [x] `.gitignore` — ✅ 2026-04-16
+
+### 0.2 Inicialización del proyecto
+- [ ] `pnpm create expo-app@latest cosmosrn --template blank-typescript`
+- [ ] Verificar que `package.json` no tiene `^` ni `~` (corregir si los hay)
+- [ ] `pnpm audit --audit-level moderate` — sin CVEs moderate+
+- [ ] Configurar `tsconfig.json` con `"strict": true` y path alias `@/`
+- [ ] Configurar ESLint + Prettier con reglas del proyecto
+- [ ] Crear `.env.example` con las variables requeridas (sin valores reales)
+- [ ] Registrar clave NASA en `https://api.nasa.gov/` y guardar en `.env`
+- [ ] Crear proyecto Supabase free tier y guardar credenciales en `.env`
+- [ ] Primer commit: `chore(init): bootstrap Expo project with strict TypeScript`
+
+### 0.3 Estructura de carpetas
+- [ ] Crear árbol `src/modules/` con carpetas vacías para los 12 módulos
+- [ ] Crear `src/shared/components/`, `hooks/`, `lib/`, `theme/`
+- [ ] Crear `src/shared/lib/nasaClient.ts` (cliente HTTP + API key)
+- [ ] Crear `src/shared/lib/solarSystemClient.ts` (Solar System OpenData)
+- [ ] Crear `src/shared/lib/issClient.ts` (Open-Notify)
+- [ ] Crear `src/shared/lib/supabaseClient.ts` (singleton)
+- [ ] Commit: `chore(structure): create module folders and shared lib clients`
+
+### 0.4 Infraestructura de testing
+- [ ] Instalar Jest + React Native Testing Library con versiones exactas
+- [ ] Configurar `jest.config.ts` con umbral de cobertura 80%
+- [ ] Verificar que `pnpm test --coverage` funciona sobre un test vacío
+- [ ] Commit: `chore(test): configure Jest with 80% coverage threshold`
+
+---
+
+## Fase 1 — Módulo: Navegación (`navigation/`)
+
+> **Caso de uso astronómico:** navegar entre Planetas, ISS, APOD, Eventos  
+> **RF:** RF-NAV-01 al RF-NAV-05 | **HU:** HU-15
+
+- [ ] Instalar React Navigation v7 con versiones exactas y auditar
+- [ ] Implementar Stack Navigator para flujo de detalle
+- [ ] Implementar Bottom Tabs Navigator (Explorar / ISS / APOD / Perfil)
+- [ ] Implementar Drawer lateral con listado de módulos
+- [ ] Pantalla Home: catálogo con nombre, descripción y estado de plataforma por módulo
+- [ ] Configurar deep linking (scheme `cosmosrn://`)
+- [ ] Tests: navegación entre tabs, apertura del drawer, deep link
+- [ ] `pnpm audit` — sin CVEs moderate+
+- [ ] Cobertura ≥ 80% en el módulo
+- [ ] Commit: `feat(navigation): implement Stack, Tabs and Drawer with module catalog`
+
+---
+
+## Fase 2 — Módulo: Catálogo solar (`lists/`)
+
+> **Caso de uso astronómico:** catálogo de planetas, lunas y asteroides  
+> **RF:** RF-LIST-01 al RF-LIST-05 | **HU:** HU-01, HU-02
+
+- [ ] Implementar `useBodyList` (TanStack Query → Solar System OpenData `/bodies`)
+- [ ] Implementar `useBodyDetail` (query por ID)
+- [ ] FlatList con virtualización para ≥ 500 elementos
+- [ ] SectionList agrupado por tipo (planeta / satélite / asteroide / cometa)
+- [ ] Pantalla de detalle con todos los campos (RF-LIST-04)
+- [ ] Caché 24h + indicador offline
+- [ ] Tests: loading, data, error, scroll performance mock, detalle
+- [ ] Cobertura ≥ 80%
+- [ ] Commit: `feat(lists): solar system catalog with FlatList and SectionList`
+
+---
+
+## Fase 3 — Módulo: Formularios (`forms/`)
+
+> **Caso de uso astronómico:** búsqueda de asteroides por fecha y distancia  
+> **RF:** RF-FORM-01 al RF-FORM-06 | **HU:** HU-06
+
+- [ ] Instalar react-hook-form + Zod con versiones exactas y auditar
+- [ ] Implementar esquema Zod: validación de fechas y rango ≤ 7 días
+- [ ] Formulario con DatePicker (Android / Web / iOS) y campo de distancia
+- [ ] Gestión de foco entre campos y cierre de teclado
+- [ ] Implementar `useNeoWs` (TanStack Query → NASA NeoWs)
+- [ ] Lista de resultados con badge PHA (potencialmente peligroso)
+- [ ] Tests: validación correcta, error fecha invertida, error rango > 7 días, submit OK
+- [ ] Cobertura ≥ 80%
+- [ ] Commit: `feat(forms): asteroid search with react-hook-form and Zod validation`
+
+---
+
+## Fase 4 — Módulo: APOD + Almacenamiento (`storage/`)
+
+> **Caso de uso astronómico:** imagen astronómica del día y favoritos  
+> **RF:** RF-APOD-01 al RF-APOD-03, RF-STOR-01 al RF-STOR-04 | **HU:** HU-04, HU-05
+
+- [ ] Implementar `useApod` (TanStack Query → NASA APOD, staleTime 1h)
+- [ ] Pantalla APOD: imagen progresiva, título, descripción, créditos
+- [ ] Soporte de vídeo APOD (abrir en navegador externo)
+- [ ] Navegación a APODs anteriores (≤ 30 días)
+- [ ] Persistir APOD del día en AsyncStorage / MMKV para offline
+- [ ] Sistema de favoritos (planetas) persistido localmente
+- [ ] Historial de búsquedas de asteroides (últimas 10)
+- [ ] Pantalla de gestión de caché con espacio usado y botón borrar
+- [ ] Share API: compartir imagen APOD
+- [ ] Tests: carga, offline fallback, añadir/quitar favorito, historial
+- [ ] Cobertura ≥ 80%
+- [ ] Commit: `feat(storage): APOD viewer with offline cache and favorites`
+
+---
+
+## Fase 5 — Módulo: Rastreo ISS (`maps/` + `realtime/`)
+
+> **Caso de uso astronómico:** posición en tiempo real de la ISS  
+> **RF:** RF-MAP-01 al RF-MAP-05, RF-RT-01 al RF-RT-03 | **HU:** HU-07, HU-08
+
+- [ ] Instalar react-native-maps con versión exacta y auditar
+- [ ] Implementar `useIssPosition` (polling cada 5s, Open-Notify)
+- [ ] Implementar `useAstronauts` (Open-Notify, staleTime 1h)
+- [ ] Mapa con marcador ISS actualizado en tiempo real
+- [ ] Trazar trayectoria orbital (últimos 10 min, 120 puntos)
+- [ ] Panel de coordenadas superpuesto al mapa
+- [ ] Botón "centrar en ISS"
+- [ ] Lista de tripulantes con nombre y nave
+- [ ] Supabase Realtime: publicar posición ISS y suscribir múltiples clientes
+- [ ] Reconexión automática tras pérdida de red
+- [ ] Tests: render mapa, actualización posición, lista tripulantes, reconexión mock
+- [ ] Cobertura ≥ 80%
+- [ ] Commit: `feat(maps): ISS real-time tracker with react-native-maps and Supabase Realtime`
+
+---
+
+## Fase 6 — Módulo: Notificaciones (`notifications/`)
+
+> **Caso de uso astronómico:** alertas de tormentas solares y paso de la ISS  
+> **RF:** RF-NOTIF-01 al RF-NOTIF-04 | **HU:** HU-09
+
+- [ ] Instalar expo-notifications con versión exacta y auditar
+- [ ] Implementar `useDonki` (NASA DONKI, staleTime 30 min)
+- [ ] Lógica: disparar notificación local si evento solar ≥ clase M
+- [ ] Configurar alerta de paso ISS por proximidad (radio ≤ 500 km)
+- [ ] Opción de notificación diaria con APOD del día
+- [ ] Pantalla de configuración de alertas con toggles
+- [ ] Solicitud de permiso con explicación en español
+- [ ] Tests: lógica de detección de evento M+, permisos mock, scheduling
+- [ ] Cobertura ≥ 80%
+- [ ] Commit: `feat(notifications): solar storm and ISS pass alerts with expo-notifications`
+
+---
+
+## Fase 7 — Módulo: Sensores / Star Map (`sensors/`)
+
+> **Caso de uso astronómico:** mapa estelar controlado por giroscopio  
+> **RF:** RF-SENS-01 al RF-SENS-04 | **HU:** HU-10
+
+- [ ] Instalar expo-sensors con versión exacta y auditar
+- [ ] Implementar `useGyroscope` y `useAccelerometer` con limpieza en unmount
+- [ ] Renderizar ≥ 100 estrellas con coordenadas reales (AR/Dec → XY)
+- [ ] Giroscopio controla rotación; acelerómetro controla inclinación
+- [ ] Fallback a gestos táctiles si no hay giroscopio
+- [ ] Label con nombre de constelación más próxima al centro
+- [ ] Tests: lectura de sensor (mock), fallback táctil, label de constelación
+- [ ] Cobertura ≥ 80%
+- [ ] Commit: `feat(sensors): gyroscope-driven star map with graceful fallback`
+
+---
+
+## Fase 8 — Módulo: Autenticación y perfil (`auth/`)
+
+> **Caso de uso astronómico:** diario personal de observaciones  
+> **RF:** RF-AUTH-01 al RF-AUTH-05 | **HU:** HU-11, HU-12, HU-13
+
+- [ ] Instalar @supabase/supabase-js + expo-secure-store con versiones exactas y auditar
+- [ ] Implementar `useAuthSession` (singleton listener `onAuthStateChange`)
+- [ ] Pantalla de registro (email + contraseña, validación Zod)
+- [ ] Pantalla de login con opción biométrica (expo-local-authentication)
+- [ ] Guardar token en expo-secure-store (nunca AsyncStorage sin cifrado)
+- [ ] Migración Supabase: tabla `observations` con RLS
+- [ ] CRUD de observaciones: crear, listar, editar, eliminar
+- [ ] Tests: registro, login, biometría mock, CRUD observaciones mock
+- [ ] Cobertura ≥ 80%
+- [ ] Commit: `feat(auth): Supabase auth with biometrics and observations diary`
+
+---
+
+## Fase 9 — Módulo: Animaciones (`animations/`)
+
+> **Caso de uso astronómico:** órbitas planetarias animadas  
+> **RF:** RF-ANIM-01 al RF-ANIM-04 | **HU:** HU-03
+
+- [ ] Instalar react-native-reanimated + react-native-gesture-handler con versiones exactas y auditar
+- [ ] Animar órbitas de Mercurio, Venus, Tierra y Marte (worklet en UI thread)
+- [ ] Velocidades proporcionales a períodos orbitales reales
+- [ ] Controles de pausa / reanudación
+- [ ] Drag para rotar planeta en 3D (Gesture Handler)
+- [ ] Spring zoom al seleccionar planeta
+- [ ] Tests: animación pausa/resume, gesto drag (mock), spring trigger
+- [ ] Cobertura ≥ 80%
+- [ ] Commit: `feat(animations): orbital animations with Reanimated 3 worklets`
+
+---
+
+## Fase 10 — Módulo: Diferencias de plataforma (`platform/`)
+
+> **Caso de uso astronómico:** comparativa Android/Web/iOS  
+> **RF:** RF-PLAT-01 al RF-PLAT-03 | **HU:** HU-14
+
+- [ ] Pantalla comparativa: permisos, APIs disponibles, diferencias de UI
+- [ ] ActionSheet nativo iOS vs. BottomSheet Android
+- [ ] Responsivo Web: 320 px → 1440 px
+- [ ] Snippets de código comentados en cada diferencia
+- [ ] Tests: render en cada plataforma (mock Platform.OS)
+- [ ] Cobertura ≥ 80%
+- [ ] Commit: `feat(platform): platform differences showcase with responsive web layout`
+
+---
+
+## Fase 11 — Módulo: Cámara AR (`camera/`) ⚡ Stretch goal
+
+> **Caso de uso astronómico:** overlay de constelaciones en AR  
+> **RF:** RF-CAM-01 al RF-CAM-05
+
+- [ ] Instalar expo-camera o react-native-vision-camera con versión exacta y auditar
+- [ ] Solicitud de permiso de cámara con explicación
+- [ ] Overlay SVG de constelaciones sobre vista de cámara
+- [ ] Integración con giroscopio (del módulo `sensors/`) para alinear overlay
+- [ ] Captura de foto y guardado en galería
+- [ ] Degradación en Web con mensaje informativo
+- [ ] Tests: permiso denegado, permiso concedido, captura mock
+- [ ] Cobertura ≥ 80%
+- [ ] Commit: `feat(camera): AR constellation overlay with expo-camera`
+
+---
+
+## Fase 12 — Pulido y entrega académica
+
+### 12.1 Tema y accesibilidad
+- [ ] Implementar sistema de tema dark/light en `src/shared/theme/`
+- [ ] Verificar contraste WCAG AA en todos los textos
+- [ ] Añadir `accessibilityLabel` y `accessibilityRole` en todos los elementos interactivos
+- [ ] Tamaño mínimo de área táctil 44×44 dp verificado
+
+### 12.2 Calidad final
+- [ ] `pnpm lint` — cero errores
+- [ ] `pnpm tsc --noEmit` — cero errores de tipos
+- [ ] `pnpm test --coverage` — todos los módulos ≥ 80%
+- [ ] `pnpm audit --audit-level moderate` — sin CVEs moderate+
+- [ ] Revisar que no hay `// TODO` sin issue asociado
+- [ ] Revisar que no hay `@ts-ignore` sin comentario justificativo
+
+### 12.3 Documentación final
+- [ ] Completar TSDoc (`@what / @why / @impact`) en todos los módulos
+- [ ] Actualizar `README.md` con instrucciones de instalación y ejecución
+- [ ] Verificar que `.env.example` está actualizado con todas las variables
+
+### 12.4 Commit de cierre
+- [ ] Commit: `docs(project): finalize academic documentation and coverage report`
+
+---
+
+## Resumen de progreso
+
+| Fase | Módulo | Estado |
+|---|---|---|
+| 0 | Fundamentos | 🟡 En progreso |
+| 1 | Navegación | ⬜ Pendiente |
+| 2 | Catálogo solar (lists) | ⬜ Pendiente |
+| 3 | Formularios (forms) | ⬜ Pendiente |
+| 4 | APOD + Storage | ⬜ Pendiente |
+| 5 | ISS (maps + realtime) | ⬜ Pendiente |
+| 6 | Notificaciones | ⬜ Pendiente |
+| 7 | Star Map (sensors) | ⬜ Pendiente |
+| 8 | Auth + Perfil | ⬜ Pendiente |
+| 9 | Animaciones | ⬜ Pendiente |
+| 10 | Platform showcase | ⬜ Pendiente |
+| 11 | Cámara AR ⚡ | ⬜ Stretch goal |
+| 12 | Pulido y entrega | ⬜ Pendiente |
+
+**Leyenda:** ✅ Completo · 🟡 En progreso · ⬜ Pendiente · ⚡ Stretch goal
