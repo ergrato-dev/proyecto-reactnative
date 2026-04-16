@@ -55,16 +55,16 @@
 > **Caso de uso astronómico:** navegar entre Planetas, ISS, APOD, Eventos  
 > **RF:** RF-NAV-01 al RF-NAV-05 | **HU:** HU-15
 
-- [ ] Instalar React Navigation v7 con versiones exactas y auditar
-- [ ] Implementar Stack Navigator para flujo de detalle
-- [ ] Implementar Bottom Tabs Navigator (Explorar / ISS / APOD / Perfil)
-- [ ] Implementar Drawer lateral con listado de módulos
-- [ ] Pantalla Home: catálogo con nombre, descripción y estado de plataforma por módulo
-- [ ] Configurar deep linking (scheme `cosmosrn://`)
-- [ ] Tests: navegación entre tabs, apertura del drawer, deep link
-- [ ] `pnpm audit` — sin CVEs moderate+
-- [ ] Cobertura ≥ 80% en el módulo
-- [ ] Commit: `feat(navigation): implement Stack, Tabs and Drawer with module catalog`
+- [x] Instalar React Navigation v7 con versiones exactas y auditar
+- [x] Implementar Stack Navigator para flujo de detalle
+- [x] Implementar Bottom Tabs Navigator (Explorar / ISS / APOD / Perfil)
+- [x] Implementar Drawer lateral con listado de módulos
+- [x] Pantalla Home: catálogo con nombre, descripción y estado de plataforma por módulo
+- [x] Configurar deep linking (scheme `cosmosrn://`)
+- [x] Tests: navegación entre tabs, apertura del drawer, deep link
+- [x] `pnpm audit` — sin CVEs moderate+
+- [x] Cobertura ≥ 80% en el módulo
+- [x] Commit: `feat(navigation): implement Stack, Tabs and Drawer with module catalog`
 
 ---
 
