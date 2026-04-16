@@ -32,6 +32,11 @@ const config = {
     '!src/**/__tests__/**',
     '!src/**/*.test.{ts,tsx}',
     '!src/**/*.spec.{ts,tsx}',
+    // Archivos de solo tipos — no contienen código ejecutable, no hay ramas que testear
+    '!src/**/types.ts',
+    // Configuración declarativa de React Navigation — wiring puro sin lógica de negocio;
+    // se valida en tests de integración de pantallas, no en tests unitarios de navigators
+    '!src/**/navigators/**',
   ],
 
   // ── Umbral mínimo de cobertura (80%) ─────────────────────────────────────
