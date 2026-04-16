@@ -136,11 +136,12 @@
 - [x] Panel de coordenadas superpuesto al mapa — ✅ 2026-04-16
 - [x] Botón "centrar en ISS" → navega a tripulación — ✅ 2026-04-16
 - [x] Lista de tripulantes con nombre y nave — ✅ 2026-04-16
-- [ ] Supabase Realtime: publicar posición ISS y suscribir múltiples clientes
-- [ ] Reconexión automática tras pérdida de red
-- [x] Tests: render mapa, actualización posición, lista tripulantes — 24 tests ✅ 2026-04-16
+- [x] Supabase Realtime: publicar posición ISS y suscribir múltiples clientes — ✅ 2026-05-20
+- [x] Reconexión automática tras pérdida de red — ✅ 2026-05-20
+- [x] Tests: render mapa, actualización posición, lista tripulantes, Realtime, reconexión — 44 tests ✅ 2026-05-20
 - [x] Cobertura ≥ 80% → maps/screens 80.43% branches / 94.73% lines — ✅ 2026-04-16
 - [x] Commit: `feat(maps): ISS real-time tracker with react-native-maps` → `9bdf087` — ✅ 2026-04-16
+- [x] Commit: `feat(realtime): Supabase Realtime ISS position broadcast with auto-reconnect` — ✅ 2026-05-20
 
 ---
 
@@ -302,7 +303,7 @@
 | 2 | Catálogo solar (lists) | ✅ Completo |
 | 3 | Formularios (forms) | ✅ Completo |
 | 4 | APOD + Storage | ✅ Completo |
-| 5 | ISS (maps + realtime) | 🟡 En progreso |
+| 5 | ISS (maps + realtime) | ✅ Completo |
 | 6 | Artemis (missions + gallery) | ✅ Completo |
 | 7 | Notificaciones | ✅ Completo |
 | 8 | Star Map (sensors) | ✅ Completo |
