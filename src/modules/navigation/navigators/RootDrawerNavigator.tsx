@@ -17,21 +17,13 @@ import type { DrawerParamList } from '../types';
 import { MainTabNavigator } from './MainTabNavigator';
 import { ArtemisStack } from './ArtemisStack';
 import { NotificationsStack } from './NotificationsStack';
+import { StarMapScreen } from '@/modules/sensors';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
 // ─── Pantallas placeholder del Drawer ────────────────────────────────────────
 
-/** Pantalla temporal para el módulo de sensores */
-function SensorsScreen() {
-  return (
-    <View style={styles.placeholder}>
-      <Text style={styles.icon}>🔄</Text>
-      <Text style={styles.title}>Sensores</Text>
-      <Text style={styles.subtitle}>Giroscopio + Star Map — Fase 9</Text>
-    </View>
-  );
-}
+
 
 /** Pantalla temporal para el módulo de cámara */
 function CameraScreen() {
@@ -106,8 +98,8 @@ export function RootDrawerNavigator() {
       />
       <Drawer.Screen
         name="Sensors"
-        component={SensorsScreen}
-        options={{ title: '🔄 Sensores' }}
+        component={StarMapScreen}
+        options={{ title: '✦ Star Map' }}
       />
       <Drawer.Screen
         name="Camera"

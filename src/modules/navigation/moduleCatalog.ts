@@ -100,7 +100,7 @@ export const MODULE_CATALOG: ModuleCatalogItem[] = [
     id: 'sensors',
     name: 'Sensores',
     astronomicalUseCase: 'Giroscopio para mover el cielo estrellado',
-    platforms: { android: 'pending', web: 'not-applicable', ios: 'pending' },
+    platforms: { android: 'ready', web: 'not-applicable', ios: 'pending' },
     phase: 9,
   },
   {
