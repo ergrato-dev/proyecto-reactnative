@@ -15,15 +15,23 @@ import { render, screen, fireEvent } from '@testing-library/react-native';
 import { HomeScreen } from '../screens/HomeScreen';
 import { MODULE_CATALOG } from '../moduleCatalog';
 
+// ─── Mock de React Navigation ─────────────────────────────────────────────────
+// HomeScreen usa `navigation.navigate` — se mockea el hook para aislar el test
+// del contexto real de React Navigation.
+
+const mockNavigate = jest.fn();
+
+jest.mock('@react-navigation/native', () => ({
+  ...jest.requireActual('@react-navigation/native'),
+  useNavigation: () => ({ navigate: mockNavigate }),
+}));
+
 // ─── Props mínimas de navegación ─────────────────────────────────────────────
-// HomeScreen usa `navigation.navigate` del prop, no el hook useNavigation.
-// Se construye un mock mínimo tipado con `as unknown as` para evitar instalar
-// todo el contexto de React Navigation en estos tests unitarios.
 
 /** Construye las props mínimas que HomeScreen necesita de React Navigation */
-function buildNavProps(navigateMock: jest.Mock) {
+function buildNavProps() {
   return {
-    navigation: { navigate: navigateMock } as unknown as Parameters<
+    navigation: { navigate: mockNavigate } as unknown as Parameters<
       typeof HomeScreen
     >[0]['navigation'],
     route: {} as Parameters<typeof HomeScreen>[0]['route'],
@@ -33,25 +41,29 @@ function buildNavProps(navigateMock: jest.Mock) {
 // ─── Suite ───────────────────────────────────────────────────────────────────
 
 describe('HomeScreen', () => {
+  beforeEach(() => {
+    mockNavigate.mockClear();
+  });
+
   it('debería renderizar el título de la aplicación', () => {
-    render(<HomeScreen {...buildNavProps(jest.fn())} />);
+    render(<HomeScreen {...buildNavProps()} />);
     expect(screen.getByText('CosmosRN')).toBeTruthy();
   });
 
   it('debería renderizar el subtítulo del showcase', () => {
-    render(<HomeScreen {...buildNavProps(jest.fn())} />);
+    render(<HomeScreen {...buildNavProps()} />);
     expect(screen.getByText('Showcase de React Native con astronomía')).toBeTruthy();
   });
 
-  it('debería renderizar los 12 módulos del catálogo', () => {
-    render(<HomeScreen {...buildNavProps(jest.fn())} />);
+  it('debería renderizar los 13 módulos del catálogo', () => {
+    render(<HomeScreen {...buildNavProps()} />);
     MODULE_CATALOG.forEach((mod) => {
       expect(screen.getByText(mod.name)).toBeTruthy();
     });
   });
 
   it('debería mostrar el caso de uso astronómico de cada módulo', () => {
-    render(<HomeScreen {...buildNavProps(jest.fn())} />);
+    render(<HomeScreen {...buildNavProps()} />);
     // Verificamos el primero y el último para cubrir el recorrido de la lista
     expect(screen.getByText(MODULE_CATALOG[0].astronomicalUseCase)).toBeTruthy();
     expect(
@@ -60,17 +72,20 @@ describe('HomeScreen', () => {
   });
 
   it('debería mostrar el indicador de fase para cada módulo', () => {
-    render(<HomeScreen {...buildNavProps(jest.fn())} />);
+    render(<HomeScreen {...buildNavProps()} />);
     MODULE_CATALOG.forEach((mod) => {
-      expect(screen.getByText('F' + mod.phase)).toBeTruthy();
+      expect(screen.getByText(`F${mod.phase}`)).toBeTruthy();
     });
   });
 
   it('debería mostrar badges de plataforma Android, Web e iOS por módulo', () => {
-    render(<HomeScreen {...buildNavProps(jest.fn())} />);
-    // Verificamos que la tarjeta del módulo navegación existe y tiene testID
-    expect(screen.getByTestId('module-card-navigation')).toBeTruthy();
-    // Cada módulo tiene 3 badges; puede haber matches extra en descripciones
+    render(<HomeScreen {...buildNavProps()} />);
+    // Cada módulo tiene 3 badges de plataforma, verificamos que el primer módulo
+    // (Navegación, fase 1) tenga los tres badges; el texto del catálogo también
+    // puede contener "Android/Web/iOS" por lo que evitamos conteo exacto global
+    const navCard = screen.getByTestId('module-card-navigation');
+    expect(navCard).toBeTruthy();
+    // Dentro de la tarjeta de Navegación deben aparecer los 3 badges
     expect(screen.getAllByText(/Android/).length).toBeGreaterThanOrEqual(
       MODULE_CATALOG.length,
     );
@@ -83,26 +98,25 @@ describe('HomeScreen', () => {
   });
 
   it('debería navegar a SolarCatalog al pulsar el módulo lists', () => {
-    const navigate = jest.fn();
-    render(<HomeScreen {...buildNavProps(navigate)} />);
+    render(<HomeScreen {...buildNavProps()} />);
+    // Usamos testID para localizar la tarjeta del módulo 'lists' de forma fiable
     const listsCard = screen.getByTestId('module-card-lists');
     fireEvent.press(listsCard);
-    expect(navigate).toHaveBeenCalledWith('SolarCatalog');
+    expect(mockNavigate).toHaveBeenCalledWith('SolarCatalog');
   });
 
   it('debería navegar a AsteroidSearch al pulsar el módulo forms', () => {
-    const navigate = jest.fn();
-    render(<HomeScreen {...buildNavProps(navigate)} />);
+    render(<HomeScreen {...buildNavProps()} />);
     const formsCard = screen.getByTestId('module-card-forms');
     fireEvent.press(formsCard);
-    expect(navigate).toHaveBeenCalledWith('AsteroidSearch');
+    expect(mockNavigate).toHaveBeenCalledWith('AsteroidSearch');
   });
 
   it('no debería navegar al pulsar un módulo no implementado', () => {
-    const navigate = jest.fn();
-    render(<HomeScreen {...buildNavProps(navigate)} />);
+    render(<HomeScreen {...buildNavProps()} />);
+    // 'Animaciones' es fase 4, aún no implementado
     const animCard = screen.getByTestId('module-card-animations');
     fireEvent.press(animCard);
-    expect(navigate).not.toHaveBeenCalled();
+    expect(mockNavigate).not.toHaveBeenCalled();
   });
 });

@@ -36,6 +36,8 @@ export type DrawerParamList = {
   Animations: undefined;
   /** Módulo de plataforma (diferencias Android/Web/iOS) */
   Platform: undefined;
+  /** Módulo de notificaciones astronómicas (DONKI + scheduling) */
+  Notifications: NavigatorScreenParams<NotificationsStackParamList>;
 };
 
 // ─── Bottom Tabs ──────────────────────────────────────────────────────────────
@@ -102,6 +104,13 @@ export type ProfileStackParamList = {
   Auth: undefined;
   /** Diario personal de observaciones */
   ObservationLog: undefined;
+};
+
+// ─── Stack "Notifications" ───────────────────────────────────────────────────
+
+export type NotificationsStackParamList = {
+  /** Configuración de alertas astronómicas (solar, ISS, APOD) */
+  NotificationSettings: undefined;
 };
 
 // ─── Props compuestos por pantalla ───────────────────────────────────────────

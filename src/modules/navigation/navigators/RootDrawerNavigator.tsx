@@ -16,6 +16,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import type { DrawerParamList } from '../types';
 import { MainTabNavigator } from './MainTabNavigator';
 import { ArtemisStack } from './ArtemisStack';
+import { NotificationsStack } from './NotificationsStack';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
@@ -117,6 +118,12 @@ export function RootDrawerNavigator() {
         name="Platform"
         component={PlatformScreen}
         options={{ title: '📱 Plataforma' }}
+      />
+      {/* Módulo Notificaciones: alertas solares y scheduling local */}
+      <Drawer.Screen
+        name="Notifications"
+        component={NotificationsStack}
+        options={{ title: '⚡ Alertas Astronómicas', headerShown: false }}
       />
     </Drawer.Navigator>
   );

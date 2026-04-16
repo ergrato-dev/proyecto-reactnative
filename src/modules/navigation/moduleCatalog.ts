@@ -93,7 +93,7 @@ export const MODULE_CATALOG: ModuleCatalogItem[] = [
     id: 'notifications',
     name: 'Notificaciones',
     astronomicalUseCase: 'Alertas de tormentas solares y paso de la ISS',
-    platforms: { android: 'pending', web: 'not-applicable', ios: 'pending' },
+    platforms: { android: 'ready', web: 'not-applicable', ios: 'pending' },
     phase: 8,
   },
   {

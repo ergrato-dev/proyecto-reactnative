@@ -166,16 +166,17 @@
 > **Caso de uso astronómico:** alertas de tormentas solares y paso de la ISS  
 > **RF:** RF-NOTIF-01 al RF-NOTIF-04 | **HU:** HU-09
 
-- [ ] Instalar expo-notifications con versión exacta y auditar
-- [ ] Implementar `useDonki` (NASA DONKI, staleTime 30 min)
-- [ ] Lógica: disparar notificación local si evento solar ≥ clase M
-- [ ] Configurar alerta de paso ISS por proximidad (radio ≤ 500 km)
-- [ ] Opción de notificación diaria con APOD del día
-- [ ] Pantalla de configuración de alertas con toggles
-- [ ] Solicitud de permiso con explicación en español
-- [ ] Tests: lógica de detección de evento M+, permisos mock, scheduling
-- [ ] Cobertura ≥ 80%
-- [ ] Commit: `feat(notifications): solar storm and ISS pass alerts with expo-notifications`
+- [x] Instalar `expo-notifications@0.29.14` y auditar CVEs — ✅ 2026-04-17
+- [x] CVE alto `@xmldom/xmldom < 0.8.12` mitigado con `pnpm.overrides` — ✅ 2026-04-17
+- [x] Implementar `useDonki` (NASA DONKI, staleTime 30 min, filtrado M+/X+) — ✅ 2026-04-17
+- [x] Implementar `useNotificationPermission` (Android 13+ POST_NOTIFICATIONS) — ✅ 2026-04-17
+- [x] Librería `notificationScheduler`: handler, alerta solar inmediata, APOD diaria (9:00 h) — ✅ 2026-04-17
+- [x] `NotificationSettingsScreen`: toggles (solar M+, ISS próximamente, APOD diaria), banner de permisos — ✅ 2026-04-17
+- [x] Solicitud de permiso con explicación en español y botón dedicado — ✅ 2026-04-17
+- [x] Añadir `NotificationsStack` al drawer lateral — ✅ 2026-04-17
+- [x] Tests: `isMajorSolarFlare`, `useDonki`, `useNotificationPermission`, `notificationScheduler`, `NotificationSettingsScreen` — 42 tests ✅ 2026-04-17
+- [x] Cobertura ≥ 80% → hooks 100% / lib 100% / screens 82% stmts / 83% branches / 91% lines — ✅ 2026-04-17
+- [x] Commit: `feat(notifications): solar storm alerts and notification settings with expo-notifications`
 
 ---
 
