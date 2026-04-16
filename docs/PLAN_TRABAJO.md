@@ -91,15 +91,15 @@
 > **Caso de uso astronómico:** búsqueda de asteroides por fecha y distancia  
 > **RF:** RF-FORM-01 al RF-FORM-06 | **HU:** HU-06
 
-- [ ] Instalar react-hook-form + Zod con versiones exactas y auditar
-- [ ] Implementar esquema Zod: validación de fechas y rango ≤ 7 días
-- [ ] Formulario con DatePicker (Android / Web / iOS) y campo de distancia
-- [ ] Gestión de foco entre campos y cierre de teclado
-- [ ] Implementar `useNeoWs` (TanStack Query → NASA NeoWs)
-- [ ] Lista de resultados con badge PHA (potencialmente peligroso)
-- [ ] Tests: validación correcta, error fecha invertida, error rango > 7 días, submit OK
-- [ ] Cobertura ≥ 80%
-- [ ] Commit: `feat(forms): asteroid search with react-hook-form and Zod validation`
+- [x] Instalar react-hook-form + Zod con versiones exactas y auditar
+- [x] Implementar esquema Zod: validación de fechas y rango ≤ 7 días
+- [x] Formulario con DatePicker (Android / Web / iOS) y campo de distancia
+- [x] Gestión de foco entre campos y cierre de teclado
+- [x] Implementar `useNeoWs` (TanStack Query → NASA NeoWs)
+- [x] Lista de resultados con badge PHA (potencialmente peligroso)
+- [x] Tests: validación correcta, error fecha invertida, error rango > 7 días, submit OK
+- [x] Cobertura ≥ 80% → 98% stmts / 90% branches / 94% funcs / 98% lines (123 tests)
+- [x] Commit: `feat(forms): asteroid search with react-hook-form and Zod validation` → `4928bee`
 
 ---
 
