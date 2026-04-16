@@ -1,3 +1,4 @@
+/// <reference types="jest" />
 /**
  * Tests unitarios para la configuración de deep linking (`linking.ts`).
  *
