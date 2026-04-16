@@ -18,6 +18,7 @@ import { MainTabNavigator } from './MainTabNavigator';
 import { ArtemisStack } from './ArtemisStack';
 import { NotificationsStack } from './NotificationsStack';
 import { StarMapScreen } from '@/modules/sensors';
+import { OrbitScreen } from '@/modules/animations';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
@@ -32,17 +33,6 @@ function CameraScreen() {
       <Text style={styles.icon}>📷</Text>
       <Text style={styles.title}>Cámara AR</Text>
       <Text style={styles.subtitle}>Constelaciones en AR — Fase 5</Text>
-    </View>
-  );
-}
-
-/** Pantalla temporal para el módulo de animaciones */
-function AnimationsScreen() {
-  return (
-    <View style={styles.placeholder}>
-      <Text style={styles.icon}>🌀</Text>
-      <Text style={styles.title}>Animaciones</Text>
-      <Text style={styles.subtitle}>Órbitas Planetarias — Fase 4</Text>
     </View>
   );
 }
@@ -93,7 +83,7 @@ export function RootDrawerNavigator() {
       {/* Módulos adicionales accesibles desde el drawer */}
       <Drawer.Screen
         name="Animations"
-        component={AnimationsScreen}
+        component={OrbitScreen}
         options={{ title: '🌀 Animaciones' }}
       />
       <Drawer.Screen

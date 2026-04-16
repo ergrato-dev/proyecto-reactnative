@@ -58,7 +58,7 @@ export const MODULE_CATALOG: ModuleCatalogItem[] = [
     id: 'animations',
     name: 'Animaciones',
     astronomicalUseCase: 'Órbitas planetarias y rotación 3D de planetas',
-    platforms: { android: 'pending', web: 'pending', ios: 'pending' },
+    platforms: { android: 'ready', web: 'pending', ios: 'pending' },
     phase: 4,
   },
   {
