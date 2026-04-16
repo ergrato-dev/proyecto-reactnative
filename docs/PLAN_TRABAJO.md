@@ -149,15 +149,15 @@
 > **Caso de uso astronómico:** estado de misiones lunares, cronograma de lanzamientos y galería de imágenes oficiales de la NASA  
 > **RF:** RF-ART-01 al RF-ART-04 | **HU:** HU-16 _(añadir a `user-stories.md`)_
 
-- [ ] Añadir `fetchArtemisImages` a `nasaClient.ts` (NASA Images API — `images-api.nasa.gov`, sin auth)
-- [ ] Implementar `useArtemisImages` (TanStack Query, staleTime 6h)
-- [ ] Datos estáticos de misiones: Artemis I (completada 2022), Artemis II (tripulada 2026), Artemis III (alunizaje 2027+)
-- [ ] `MissionStatusScreen` — lista de misiones con estado, tripulación y fecha objetivo (FlatList)
-- [ ] `ArtemisGalleryScreen` — galería horizontal de imágenes oficiales con título y fecha
-- [ ] Añadir entrada en el Drawer para acceso directo a la sección Artemis
-- [ ] Tests: render lista de misiones, estados completada/en-progreso/planificada, carga de galería
-- [ ] Cobertura ≥ 80%
-- [ ] Commit: `feat(artemis): mission status screen and NASA image gallery`
+- [x] Añadir `fetchArtemisImages` a `nasaClient.ts` (NASA Images API — `images-api.nasa.gov`, sin auth) — ✅ 2026-04-16
+- [x] Implementar `useArtemisImages` (TanStack Query, staleTime 6h) — ✅ 2026-04-16
+- [x] Datos estáticos de misiones: Artemis I (completada 2022), Artemis II (tripulada 2026), Artemis III (alunizaje 2027+) — ✅ 2026-04-16
+- [x] `MissionStatusScreen` — lista de misiones con estado, tripulación y fecha objetivo (FlatList) — ✅ 2026-04-16
+- [x] `ArtemisGalleryScreen` — galería horizontal de imágenes oficiales con título y fecha — ✅ 2026-04-16
+- [x] Añadir entrada en el Drawer para acceso directo a la sección Artemis — ✅ 2026-04-16
+- [x] Tests: render lista de misiones, estados completada/en-progreso/planificada, carga de galería — 26 tests ✅ 2026-04-16
+- [x] Cobertura ≥ 80% — ✅ 2026-04-16
+- [x] Commit: `feat(artemis): mission status screen and NASA image gallery` → `d35ac83` — ✅ 2026-04-16
 
 ---
 
@@ -299,7 +299,7 @@
 | 3 | Formularios (forms) | ✅ Completo |
 | 4 | APOD + Storage | ✅ Completo |
 | 5 | ISS (maps + realtime) | 🟡 En progreso |
-| 6 | Artemis (missions + gallery) | ⬜ Pendiente |
+| 6 | Artemis (missions + gallery) | ✅ Completo |
 | 7 | Notificaciones | ⬜ Pendiente |
 | 8 | Star Map (sensors) | ⬜ Pendiente |
 | 9 | Auth + Perfil | ⬜ Pendiente |
