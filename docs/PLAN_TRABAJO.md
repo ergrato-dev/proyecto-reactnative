@@ -30,8 +30,8 @@
 - [x] Configurar `tsconfig.json` con `"strict": true` y path alias `@/` — ✅ 2026-04-17
 - [x] Configurar ESLint + Prettier con reglas del proyecto — ✅ 2026-04-17
 - [x] Crear `.env.example` con las variables requeridas (sin valores reales) — ✅ 2026-04-17
-- [ ] Registrar clave NASA en `https://api.nasa.gov/` y guardar en `.env`
-- [ ] Crear proyecto Supabase free tier y guardar credenciales en `.env`
+- [X] Registrar clave NASA en `https://api.nasa.gov/` y guardar en `.env`
+- [X] Crear proyecto Supabase free tier y guardar credenciales en `.env`
 - [x] Primer commit: `chore(init): bootstrap Expo SDK 55 project with strict TypeScript` — ✅ commit 6c9d9eb
 
 ### 0.3 Estructura de carpetas

@@ -7,7 +7,8 @@
  *   los ParamList; estos placeholders evitan errores de tipo en tiempo de build.
  * @impact `SolarCatalogScreen` y `BodyDetailScreen` fueron movidas al módulo
  *   `lists/` en Fase 2; `AsteroidSearchScreen` fue movida al módulo `forms/`
- *   en Fase 3. Las pantallas restantes se implementarán en fases posteriores.
+ *   en Fase 3; `APODGalleryScreen` fue movida al módulo `storage/` en Fase 4.
+ *   Las pantallas restantes se implementarán en fases posteriores.
  */
 
 import React from 'react';
@@ -22,19 +23,6 @@ export function ObservationLogScreen() {
       <Text style={styles.icon}>📓</Text>
       <Text style={styles.title}>Diario de Observaciones</Text>
       <Text style={styles.subtitle}>Disponible en Fase 10 — Autenticación</Text>
-    </View>
-  );
-}
-
-/**
- * Pantalla temporal de galería APOD.
- */
-export function APODGalleryScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.icon}>🖼️</Text>
-      <Text style={styles.title}>Galería APOD</Text>
-      <Text style={styles.subtitle}>Disponible en Fase 7 — Storage</Text>
     </View>
   );
 }

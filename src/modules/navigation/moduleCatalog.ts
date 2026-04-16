@@ -79,7 +79,7 @@ export const MODULE_CATALOG: ModuleCatalogItem[] = [
     id: 'storage',
     name: 'Almacenamiento',
     astronomicalUseCase: 'Caché de imágenes APOD y favoritos',
-    platforms: { android: 'pending', web: 'pending', ios: 'pending' },
+    platforms: { android: 'ready', web: 'ready', ios: 'pending' },
     phase: 7,
   },
   {

@@ -5,17 +5,17 @@
  *   mensaje de disponibilidad de fase correctamente.
  * @why Las pantallas placeholder son contratos de routing: si no renderizan,
  *   el navegador lanzaría un error en tiempo de ejecución en esa ruta.
- * @impact Cubre `ObservationLogScreen`, `APODGalleryScreen`, `AstronautsScreen`,
+ * @impact Cubre `ObservationLogScreen`, `AstronautsScreen`,
  *   `APODDetailScreen`, `ISSMapScreen` y `AuthScreen`.
  *   `SolarCatalogScreen` y `BodyDetailScreen` se testean en `src/modules/lists/`.
  *   `AsteroidSearchScreen` fue movida al módulo `forms/` en Fase 3.
+ *   `APODGalleryScreen` fue movida al módulo `storage/` en Fase 4.
  */
 
 import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 import {
   ObservationLogScreen,
-  APODGalleryScreen,
   AstronautsScreen,
 } from '../screens/PlaceholderScreens';
 import { APODDetailScreen } from '../screens/APODDetailScreen';
@@ -27,14 +27,6 @@ describe('ObservationLogScreen', () => {
     render(<ObservationLogScreen />);
     expect(screen.getByText('Diario de Observaciones')).toBeTruthy();
     expect(screen.getByText('Disponible en Fase 10 — Autenticación')).toBeTruthy();
-  });
-});
-
-describe('APODGalleryScreen', () => {
-  it('debería renderizar el título y el mensaje de fase', () => {
-    render(<APODGalleryScreen />);
-    expect(screen.getByText('Galería APOD')).toBeTruthy();
-    expect(screen.getByText('Disponible en Fase 7 — Storage')).toBeTruthy();
   });
 });
 

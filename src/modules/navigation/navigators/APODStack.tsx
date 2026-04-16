@@ -11,8 +11,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { APODStackParamList } from '../types';
-import { APODDetailScreen } from '../screens/APODDetailScreen';
-import { APODGalleryScreen } from '../screens/PlaceholderScreens';
+import { APODDetailScreen, APODGalleryScreen } from '@/modules/storage';
 
 const Stack = createNativeStackNavigator<APODStackParamList>();
 
