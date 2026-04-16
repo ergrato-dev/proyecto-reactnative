@@ -73,15 +73,15 @@
 > **Caso de uso astronómico:** catálogo de planetas, lunas y asteroides  
 > **RF:** RF-LIST-01 al RF-LIST-05 | **HU:** HU-01, HU-02
 
-- [ ] Implementar `useBodyList` (TanStack Query → Solar System OpenData `/bodies`)
-- [ ] Implementar `useBodyDetail` (query por ID)
-- [ ] FlatList con virtualización para ≥ 500 elementos
-- [ ] SectionList agrupado por tipo (planeta / satélite / asteroide / cometa)
-- [ ] Pantalla de detalle con todos los campos (RF-LIST-04)
-- [ ] Caché 24h + indicador offline
-- [ ] Tests: loading, data, error, scroll performance mock, detalle
-- [ ] Cobertura ≥ 80%
-- [ ] Commit: `feat(lists): solar system catalog with FlatList and SectionList`
+- [x] Implementar `useBodyList` (TanStack Query → Solar System OpenData `/bodies`)
+- [x] Implementar `useBodyDetail` (query por ID)
+- [x] FlatList con virtualización para ≥ 500 elementos
+- [x] SectionList agrupado por tipo (planeta / satélite / asteroide / cometa)
+- [x] Pantalla de detalle con todos los campos (RF-LIST-04)
+- [x] Caché 24h + indicador offline
+- [x] Tests: loading, data, error, scroll performance mock, detalle
+- [x] Cobertura ≥ 80% → 98% stmts / 90% branches / 97% funcs / 99% lines
+- [x] Commit: `feat(lists): solar system catalog with FlatList and SectionList` → `36c4c06`
 
 ---
 
