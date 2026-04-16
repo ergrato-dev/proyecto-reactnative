@@ -1,28 +1,16 @@
 /**
- * Pantallas placeholder: Catálogo Solar y Búsqueda de Asteroides.
+ * Pantallas placeholder pendientes de implementación.
  *
- * @what Pantallas provisionales para los stacks de la tab Explorar que se
- *   implementarán en las Fases 2 (lists) y 3 (forms).
+ * @what Pantallas provisionales para las rutas del stack Explorar y del stack
+ *   Perfil/ISS que se implementarán en fases posteriores.
  * @why React Navigation requiere un componente por cada ruta declarada en
  *   los ParamList; estos placeholders evitan errores de tipo en tiempo de build.
- * @impact Serán reemplazados en Fases 2 y 3 respectivamente.
+ * @impact `SolarCatalogScreen` y `BodyDetailScreen` fueron movidas al módulo
+ *   `lists/` en Fase 2; `AsteroidSearchScreen` será reemplazada en Fase 3.
  */
 
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-
-/**
- * Pantalla temporal del catálogo del sistema solar.
- */
-export function SolarCatalogScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.icon}>🪐</Text>
-      <Text style={styles.title}>Catálogo Solar</Text>
-      <Text style={styles.subtitle}>Disponible en Fase 2 — Listas</Text>
-    </View>
-  );
-}
 
 /**
  * Pantalla temporal de búsqueda de asteroides.
@@ -33,19 +21,6 @@ export function AsteroidSearchScreen() {
       <Text style={styles.icon}>☄️</Text>
       <Text style={styles.title}>Búsqueda de Asteroides</Text>
       <Text style={styles.subtitle}>Disponible en Fase 3 — Formularios</Text>
-    </View>
-  );
-}
-
-/**
- * Pantalla temporal de detalle de cuerpo celeste.
- */
-export function BodyDetailScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.icon}>🌍</Text>
-      <Text style={styles.title}>Detalle de Cuerpo Celeste</Text>
-      <Text style={styles.subtitle}>Disponible en Fase 2 — Listas</Text>
     </View>
   );
 }

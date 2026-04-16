@@ -5,17 +5,16 @@
  *   mensaje de disponibilidad de fase correctamente.
  * @why Las pantallas placeholder son contratos de routing: si no renderizan,
  *   el navegador lanzaría un error en tiempo de ejecución en esa ruta.
- * @impact Cubre `SolarCatalogScreen`, `AsteroidSearchScreen`,
- *   `BodyDetailScreen`, `ObservationLogScreen`, `APODGalleryScreen`,
- *   `AstronautsScreen`, `APODDetailScreen`, `ISSMapScreen` y `AuthScreen`.
+ * @impact Cubre `AsteroidSearchScreen`, `ObservationLogScreen`,
+ *   `APODGalleryScreen`, `AstronautsScreen`, `APODDetailScreen`,
+ *   `ISSMapScreen` y `AuthScreen`.
+ *   `SolarCatalogScreen` y `BodyDetailScreen` se testean en `src/modules/lists/`.
  */
 
 import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 import {
-  SolarCatalogScreen,
   AsteroidSearchScreen,
-  BodyDetailScreen,
   ObservationLogScreen,
   APODGalleryScreen,
   AstronautsScreen,
@@ -24,27 +23,11 @@ import { APODDetailScreen } from '../screens/APODDetailScreen';
 import { ISSMapScreen } from '../screens/ISSMapScreen';
 import { AuthScreen } from '../screens/AuthScreen';
 
-describe('SolarCatalogScreen', () => {
-  it('debería renderizar el título y el mensaje de fase', () => {
-    render(<SolarCatalogScreen />);
-    expect(screen.getByText('Catálogo Solar')).toBeTruthy();
-    expect(screen.getByText('Disponible en Fase 2 — Listas')).toBeTruthy();
-  });
-});
-
 describe('AsteroidSearchScreen', () => {
   it('debería renderizar el título y el mensaje de fase', () => {
     render(<AsteroidSearchScreen />);
     expect(screen.getByText('Búsqueda de Asteroides')).toBeTruthy();
     expect(screen.getByText('Disponible en Fase 3 — Formularios')).toBeTruthy();
-  });
-});
-
-describe('BodyDetailScreen', () => {
-  it('debería renderizar el título y el mensaje de fase', () => {
-    render(<BodyDetailScreen />);
-    expect(screen.getByText('Detalle de Cuerpo Celeste')).toBeTruthy();
-    expect(screen.getByText('Disponible en Fase 2 — Listas')).toBeTruthy();
   });
 });
 
