@@ -15,6 +15,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { View, Text, StyleSheet } from 'react-native';
 import type { DrawerParamList } from '../types';
 import { MainTabNavigator } from './MainTabNavigator';
+import { ArtemisStack } from './ArtemisStack';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
@@ -89,6 +90,12 @@ export function RootDrawerNavigator() {
         name="MainTabs"
         component={MainTabNavigator}
         options={{ title: 'CosmosRN', headerShown: false }}
+      />
+      {/* Módulo Artemis: misiones y galería de imágenes NASA */}
+      <Drawer.Screen
+        name="Artemis"
+        component={ArtemisStack}
+        options={{ title: '🌙 Programa Artemis', headerShown: false }}
       />
       {/* Módulos adicionales accesibles desde el drawer */}
       <Drawer.Screen

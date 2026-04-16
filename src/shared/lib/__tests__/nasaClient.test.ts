@@ -6,7 +6,7 @@
  * URLs correctas y propagan correctamente los errores HTTP.
  */
 
-import { fetchApod, fetchNeoWsFeed, fetchSolarFlares } from '../nasaClient';
+import { fetchApod, fetchNeoWsFeed, fetchSolarFlares, fetchArtemisImages } from '../nasaClient';
 
 // ─── Helpers de mock ──────────────────────────────────────────────────────────
 
@@ -153,6 +153,61 @@ describe('fetchSolarFlares', () => {
     // Act & Assert
     await expect(fetchSolarFlares('2026-04-10', '2026-04-16')).rejects.toThrow(
       'Error al obtener datos de clima espacial',
+    );
+  });
+});
+
+// ─── fetchArtemisImages ───────────────────────────────────────────────────────
+
+describe('fetchArtemisImages', () => {
+  afterEach(() => jest.resetAllMocks());
+
+  it('debería retornar los ítems de imagen cuando la respuesta es exitosa', async () => {
+    // Arrange
+    const mockResponse = {
+      collection: {
+        items: [
+          {
+            href: 'https://images-assets.nasa.gov/image/artemis-1/',
+            data: [{ nasa_id: 'artemis-1', title: 'Artemis I Launch', description: '', date_created: '2022-11-16' }],
+            links: [{ href: 'https://images-assets.nasa.gov/image/artemis-1/thumb.jpg', rel: 'preview' }],
+          },
+        ],
+        metadata: { total_hits: 1 },
+      },
+    };
+    mockFetchOk(mockResponse);
+
+    // Act
+    const result = await fetchArtemisImages(1);
+
+    // Assert
+    expect(result).toHaveLength(1);
+    expect(result[0].data[0].title).toBe('Artemis I Launch');
+  });
+
+  it('debería usar la URL base de NASA Images (sin api_key)', async () => {
+    // Arrange
+    mockFetchOk({ collection: { items: [], metadata: { total_hits: 0 } } });
+
+    // Act
+    await fetchArtemisImages(5);
+
+    // Assert
+    const calledUrl = (global.fetch as jest.Mock).mock.calls[0][0] as string;
+    expect(calledUrl).toContain('images-api.nasa.gov');
+    expect(calledUrl).toContain('q=Artemis');
+    expect(calledUrl).toContain('media_type=image');
+    expect(calledUrl).not.toContain('api_key=');
+  });
+
+  it('debería lanzar un error en español cuando la respuesta falla', async () => {
+    // Arrange
+    mockFetchError(503, 'Service Unavailable');
+
+    // Act & Assert
+    await expect(fetchArtemisImages()).rejects.toThrow(
+      'Error al obtener imágenes de Artemis',
     );
   });
 });

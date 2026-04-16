@@ -128,19 +128,19 @@
 > **Caso de uso astronómico:** posición en tiempo real de la ISS  
 > **RF:** RF-MAP-01 al RF-MAP-05, RF-RT-01 al RF-RT-03 | **HU:** HU-07, HU-08
 
-- [ ] Instalar react-native-maps con versión exacta y auditar
-- [ ] Implementar `useIssPosition` (polling cada 5s, Open-Notify)
-- [ ] Implementar `useAstronauts` (Open-Notify, staleTime 1h)
-- [ ] Mapa con marcador ISS actualizado en tiempo real
-- [ ] Trazar trayectoria orbital (últimos 10 min, 120 puntos)
-- [ ] Panel de coordenadas superpuesto al mapa
-- [ ] Botón "centrar en ISS"
-- [ ] Lista de tripulantes con nombre y nave
+- [x] Instalar react-native-maps con versión exacta y auditar — ✅ 2026-04-16
+- [x] Implementar `useIssPosition` (polling cada 5s, Open-Notify) — ✅ 2026-04-16
+- [x] Implementar `useAstronauts` (Open-Notify, staleTime 1h) — ✅ 2026-04-16
+- [x] Mapa con marcador ISS actualizado en tiempo real — ✅ 2026-04-16
+- [x] Trazar trayectoria orbital (últimos 10 min, 120 puntos) — ✅ 2026-04-16
+- [x] Panel de coordenadas superpuesto al mapa — ✅ 2026-04-16
+- [x] Botón "centrar en ISS" → navega a tripulación — ✅ 2026-04-16
+- [x] Lista de tripulantes con nombre y nave — ✅ 2026-04-16
 - [ ] Supabase Realtime: publicar posición ISS y suscribir múltiples clientes
 - [ ] Reconexión automática tras pérdida de red
-- [ ] Tests: render mapa, actualización posición, lista tripulantes, reconexión mock
-- [ ] Cobertura ≥ 80%
-- [ ] Commit: `feat(maps): ISS real-time tracker with react-native-maps and Supabase Realtime`
+- [x] Tests: render mapa, actualización posición, lista tripulantes — 24 tests ✅ 2026-04-16
+- [x] Cobertura ≥ 80% → maps/screens 80.43% branches / 94.73% lines — ✅ 2026-04-16
+- [x] Commit: `feat(maps): ISS real-time tracker with react-native-maps` → `9bdf087` — ✅ 2026-04-16
 
 ---
 
@@ -298,7 +298,7 @@
 | 2 | Catálogo solar (lists) | ✅ Completo |
 | 3 | Formularios (forms) | ✅ Completo |
 | 4 | APOD + Storage | ✅ Completo |
-| 5 | ISS (maps + realtime) | ⬜ Pendiente |
+| 5 | ISS (maps + realtime) | 🟡 En progreso |
 | 6 | Artemis (missions + gallery) | ⬜ Pendiente |
 | 7 | Notificaciones | ⬜ Pendiente |
 | 8 | Star Map (sensors) | ⬜ Pendiente |

@@ -26,6 +26,8 @@ import type { DrawerScreenProps } from '@react-navigation/drawer';
 export type DrawerParamList = {
   /** Contenedor de las tabs principales */
   MainTabs: NavigatorScreenParams<TabParamList>;
+  /** Módulo de misiones y galería del programa Artemis */
+  Artemis: NavigatorScreenParams<ArtemisStackParamList>;
   /** Módulo de sensores (giroscopio + star map) */
   Sensors: undefined;
   /** Módulo de cámara (AR constelaciones) */
@@ -64,6 +66,15 @@ export type ExploreStackParamList = {
   BodyDetail: { bodyId: string; bodyName: string };
   /** Búsqueda de asteroides por fecha (Fase 3) */
   AsteroidSearch: undefined;
+};
+
+// ─── Stack "Artemis" ─────────────────────────────────────────────────────────
+
+export type ArtemisStackParamList = {
+  /** Estado de misiones Artemis I, II, III */
+  MissionStatus: undefined;
+  /** Galería de imágenes NASA del programa Artemis */
+  ArtemisGallery: undefined;
 };
 
 // ─── Stack "ISS" ─────────────────────────────────────────────────────────────

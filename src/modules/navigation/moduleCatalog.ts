@@ -76,6 +76,13 @@ export const MODULE_CATALOG: ModuleCatalogItem[] = [
     phase: 6,
   },
   {
+    id: 'artemis',
+    name: 'Programa Artemis',
+    astronomicalUseCase: 'Misiones lunares y galería de imágenes NASA Artemis',
+    platforms: { android: 'ready', web: 'ready', ios: 'pending' },
+    phase: 13,
+  },
+  {
     id: 'storage',
     name: 'Almacenamiento',
     astronomicalUseCase: 'Caché de imágenes APOD y favoritos',

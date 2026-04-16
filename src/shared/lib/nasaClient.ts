@@ -1,17 +1,23 @@
 /**
- * Cliente HTTP centralizado para las APIs de NASA (APOD, NeoWs, DONKI).
+ * Cliente HTTP centralizado para las APIs de NASA (APOD, NeoWs, DONKI, Images).
  *
  * @what Exporta funciones tipadas para cada endpoint de NASA, inyectando
  *   automáticamente la API key desde las variables de entorno.
  * @why Centralizar las llamadas a NASA evita duplicar la lógica de autenticación
  *   y permite aplicar políticas de caché uniformes en TanStack Query.
- * @impact Todos los hooks de los módulos `lists/`, `forms/`, `storage/` y
- *   `notifications/` dependen de este cliente. Cambios aquí afectan a toda
- *   la capa de fetching de datos NASA.
+ * @impact Todos los hooks de los módulos `lists/`, `forms/`, `storage/`,
+ *   `artemis/` y `notifications/` dependen de este cliente. Cambios aquí
+ *   afectan a toda la capa de fetching de datos NASA.
  */
 
 /** URL base de la API de NASA */
 const NASA_BASE_URL = 'https://api.nasa.gov';
+
+/**
+ * URL base de la NASA Images and Video Library.
+ * Esta API no requiere clave de autenticación.
+ */
+const NASA_IMAGES_BASE_URL = 'https://images-api.nasa.gov';
 
 /** Clave de API leída desde variables de entorno de Expo */
 const NASA_API_KEY = process.env.EXPO_PUBLIC_NASA_API_KEY ?? 'DEMO_KEY';
@@ -170,4 +176,63 @@ export async function fetchSolarFlares(
   const data = await response.json();
   // La API puede devolver null si no hay eventos en el rango
   return (data as DonkiSolarFlare[] | null) ?? [];
+}
+
+// ─── NASA Images and Video Library ───────────────────────────────────────────
+
+/** Un ítem de imagen dentro de la respuesta de la NASA Images API */
+export interface NasaImageItem {
+  /** URL de la imagen en resolución media (thumb o medium) */
+  href: string;
+  /** Datos descriptivos del activo */
+  data: Array<{
+    nasa_id: string;
+    title: string;
+    description: string;
+    date_created: string;
+    keywords?: string[];
+    center?: string;
+  }>;
+  /** Colección de links (incluye thumbnail) */
+  links?: Array<{ href: string; rel: string; render?: string }>;
+}
+
+/** Respuesta de búsqueda de la NASA Images API */
+export interface NasaImagesSearchResponse {
+  collection: {
+    items: NasaImageItem[];
+    metadata: { total_hits: number };
+  };
+}
+
+/**
+ * Busca imágenes del programa Artemis en la NASA Images and Video Library.
+ *
+ * @what Llama a `images-api.nasa.gov/search` con `q=Artemis` y filtra por
+ *   tipo `image`, devolviendo hasta `limit` resultados.
+ * @why El módulo `artemis/` necesita imágenes oficiales de la NASA para la
+ *   galería de `ArtemisGalleryScreen` sin requerir autenticación.
+ * @impact Usado en `useArtemisImages`. Aplicar `staleTime` de 6 h en la query.
+ *   No requiere NASA_API_KEY — usa la NASA Images API pública.
+ *
+ * @param limit - Número máximo de resultados (por defecto 20)
+ * @returns Lista de ítems de imagen con metadatos y thumbnail URL
+ * @throws Error con mensaje en español si la respuesta no es OK
+ */
+export async function fetchArtemisImages(limit = 20): Promise<NasaImageItem[]> {
+  const url = new URL(`${NASA_IMAGES_BASE_URL}/search`);
+  url.searchParams.set('q', 'Artemis');
+  url.searchParams.set('media_type', 'image');
+  url.searchParams.set('page_size', String(limit));
+
+  const response = await fetch(url.toString());
+
+  if (!response.ok) {
+    throw new Error(
+      `Error al obtener imágenes de Artemis: ${response.status} ${response.statusText}`,
+    );
+  }
+
+  const data = (await response.json()) as NasaImagesSearchResponse;
+  return data.collection.items;
 }

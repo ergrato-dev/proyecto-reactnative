@@ -14,8 +14,8 @@ import { MODULE_CATALOG, type PlatformStatus } from '../moduleCatalog';
 const VALID_PLATFORM_STATUSES: PlatformStatus[] = ['ready', 'pending', 'not-applicable'];
 
 describe('MODULE_CATALOG', () => {
-  it('debería contener exactamente 12 módulos', () => {
-    expect(MODULE_CATALOG).toHaveLength(12);
+  it('debería contener exactamente 13 módulos', () => {
+    expect(MODULE_CATALOG).toHaveLength(13);
   });
 
   it('debería tener IDs únicos en todos los módulos', () => {
@@ -24,10 +24,10 @@ describe('MODULE_CATALOG', () => {
     expect(uniqueIds.size).toBe(ids.length);
   });
 
-  it('todos los módulos deberían tener fase entre 1 y 12', () => {
+  it('todos los módulos deberían tener fase entre 1 y 13', () => {
     MODULE_CATALOG.forEach((m) => {
       expect(m.phase).toBeGreaterThanOrEqual(1);
-      expect(m.phase).toBeLessThanOrEqual(12);
+      expect(m.phase).toBeLessThanOrEqual(13);
     });
   });
 
