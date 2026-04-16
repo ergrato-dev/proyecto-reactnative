@@ -23,30 +23,30 @@
 - [x] `.gitignore` — ✅ 2026-04-16
 
 ### 0.2 Inicialización del proyecto
-- [ ] `pnpm create expo-app@latest cosmosrn --template blank-typescript`
-- [ ] Verificar que `package.json` no tiene `^` ni `~` (corregir si los hay)
-- [ ] `pnpm audit --audit-level moderate` — sin CVEs moderate+
-- [ ] Configurar `tsconfig.json` con `"strict": true` y path alias `@/`
-- [ ] Configurar ESLint + Prettier con reglas del proyecto
-- [ ] Crear `.env.example` con las variables requeridas (sin valores reales)
+- [x] `pnpm create expo-app@latest cosmosrn --template blank-typescript` — ✅ 2026-04-17
+- [x] Verificar que `package.json` no tiene `^` ni `~` (corregir si los hay) — ✅ 2026-04-17
+- [x] `pnpm audit --audit-level moderate` — sin CVEs moderate+ — ✅ 2026-04-17
+- [x] Configurar `tsconfig.json` con `"strict": true` y path alias `@/` — ✅ 2026-04-17
+- [x] Configurar ESLint + Prettier con reglas del proyecto — ✅ 2026-04-17
+- [x] Crear `.env.example` con las variables requeridas (sin valores reales) — ✅ 2026-04-17
 - [ ] Registrar clave NASA en `https://api.nasa.gov/` y guardar en `.env`
 - [ ] Crear proyecto Supabase free tier y guardar credenciales en `.env`
-- [ ] Primer commit: `chore(init): bootstrap Expo project with strict TypeScript`
+- [x] Primer commit: `chore(init): bootstrap Expo SDK 55 project with strict TypeScript` — ✅ commit 6c9d9eb
 
 ### 0.3 Estructura de carpetas
-- [ ] Crear árbol `src/modules/` con carpetas vacías para los 12 módulos
-- [ ] Crear `src/shared/components/`, `hooks/`, `lib/`, `theme/`
-- [ ] Crear `src/shared/lib/nasaClient.ts` (cliente HTTP + API key)
-- [ ] Crear `src/shared/lib/solarSystemClient.ts` (Solar System OpenData)
-- [ ] Crear `src/shared/lib/issClient.ts` (Open-Notify)
-- [ ] Crear `src/shared/lib/supabaseClient.ts` (singleton)
-- [ ] Commit: `chore(structure): create module folders and shared lib clients`
+- [x] Crear árbol `src/modules/` con carpetas vacías para los 12 módulos — ✅ 2026-04-17
+- [x] Crear `src/shared/components/`, `hooks/`, `lib/`, `theme/` — ✅ 2026-04-17
+- [x] Crear `src/shared/lib/nasaClient.ts` (cliente HTTP + API key) — ✅ 2026-04-17
+- [x] Crear `src/shared/lib/solarSystemClient.ts` (Solar System OpenData) — ✅ 2026-04-17
+- [x] Crear `src/shared/lib/issClient.ts` (Open-Notify) — ✅ 2026-04-17
+- [x] Crear `src/shared/lib/supabaseClient.ts` (singleton) — ✅ 2026-04-17
+- [x] Commit: `chore(structure): create module folders and shared lib clients` — ✅ commit 8543928
 
 ### 0.4 Infraestructura de testing
-- [ ] Instalar Jest + React Native Testing Library con versiones exactas
-- [ ] Configurar `jest.config.ts` con umbral de cobertura 80%
-- [ ] Verificar que `pnpm test --coverage` funciona sobre un test vacío
-- [ ] Commit: `chore(test): configure Jest with 80% coverage threshold`
+- [x] Instalar Jest + React Native Testing Library con versiones exactas — ✅ 2026-04-17
+- [x] Configurar `jest.config.js` con umbral de cobertura 80% — ✅ 2026-04-17
+- [x] `pnpm test --coverage`: 23 tests, 4 suites PASS; 100% stmts/funcs/lines, 92% branches — ✅ 2026-04-17
+- [x] Commit: `chore(test): configure Jest with 80% coverage threshold` — ✅ commit 01ce71d
 
 ---
 
