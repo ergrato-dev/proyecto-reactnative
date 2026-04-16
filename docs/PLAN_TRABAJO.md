@@ -256,15 +256,15 @@
 > **Caso de uso astronómico:** overlay de constelaciones en AR  
 > **RF:** RF-CAM-01 al RF-CAM-05
 
-- [ ] Instalar expo-camera o react-native-vision-camera con versión exacta y auditar
-- [ ] Solicitud de permiso de cámara con explicación
-- [ ] Overlay SVG de constelaciones sobre vista de cámara
-- [ ] Integración con giroscopio (del módulo `sensors/`) para alinear overlay
-- [ ] Captura de foto y guardado en galería
-- [ ] Degradación en Web con mensaje informativo
-- [ ] Tests: permiso denegado, permiso concedido, captura mock
-- [ ] Cobertura ≥ 80%
-- [ ] Commit: `feat(camera): AR constellation overlay with expo-camera`
+- [x] Instalar expo-camera@55.0.15 y react-native-svg@15.15.3 con versión exacta y auditar — ✅ 2026-04-16
+- [x] Solicitud de permiso de cámara con explicación en español — ✅ 2026-04-16
+- [x] Overlay SVG de constelaciones sobre vista de cámara (`ConstellationOverlay`) — ✅ 2026-04-16
+- [x] Integración con giroscopio (módulo `sensors/`) para alinear overlay — ✅ 2026-04-16
+- [x] Captura de foto (`takePictureAsync`) con previsualización — ✅ 2026-04-16
+- [x] Degradación en Web con mensaje informativo — ✅ 2026-04-16
+- [x] Tests: permiso denegado, permiso concedido, captura mock, overlay, Web — 18 tests ✅ 2026-04-16
+- [x] Cobertura ≥ 80% — ✅ 2026-04-16
+- [x] Commit: `feat(camera): AR constellation overlay with expo-camera` — ✅ 2026-04-16
 
 ---
 
@@ -310,7 +310,7 @@
 | 9 | Auth + Perfil | ✅ Completo |
 | 10 | Animaciones | ✅ Completo |
 | 11 | Platform showcase | ✅ Completo |
-| 12 | Cámara AR ⚡ | ⬜ Stretch goal |
+| 12 | Cámara AR ⚡ | ✅ Completo |
 | 13 | Pulido y entrega | ⬜ Pendiente |
 
 **Leyenda:** ✅ Completo · 🟡 En progreso · ⬜ Pendiente · ⚡ Stretch goal

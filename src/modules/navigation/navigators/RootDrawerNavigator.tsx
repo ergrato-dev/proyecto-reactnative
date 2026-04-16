@@ -12,7 +12,7 @@
 
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import type { DrawerParamList } from '../types';
 import { MainTabNavigator } from './MainTabNavigator';
 import { ArtemisStack } from './ArtemisStack';
@@ -20,19 +20,9 @@ import { NotificationsStack } from './NotificationsStack';
 import { StarMapScreen } from '@/modules/sensors';
 import { OrbitScreen } from '@/modules/animations';
 import { PlatformShowcaseScreen } from '@/modules/platform';
+import { ARConstellationScreen } from '@/modules/camera';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
-
-/** Pantalla temporal para el módulo de cámara */
-function CameraScreen() {
-  return (
-    <View style={styles.placeholder}>
-      <Text style={styles.icon}>📷</Text>
-      <Text style={styles.title}>Cámara AR</Text>
-      <Text style={styles.subtitle}>Constelaciones en AR — Fase 5</Text>
-    </View>
-  );
-}
 
 // ─── Navegador raíz ───────────────────────────────────────────────────────────
 
@@ -79,7 +69,7 @@ export function RootDrawerNavigator() {
       />
       <Drawer.Screen
         name="Camera"
-        component={CameraScreen}
+        component={ARConstellationScreen}
         options={{ title: '📷 Cámara AR' }}
       />
       <Drawer.Screen
@@ -97,15 +87,6 @@ export function RootDrawerNavigator() {
   );
 }
 
-const styles = StyleSheet.create({
-  placeholder: {
-    flex: 1,
-    backgroundColor: '#050d24',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 12,
-  },
-  icon: { fontSize: 48 },
-  title: { fontSize: 20, fontWeight: '700', color: '#e8eaf6' },
-  subtitle: { fontSize: 14, color: '#90a4ae', textAlign: 'center', paddingHorizontal: 32 },
-});
+// Archivo sin estilos locales — pantallas del drawer usan sus propios estilos
+const styles = StyleSheet.create({});
+void styles;
