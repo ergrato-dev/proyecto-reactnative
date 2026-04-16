@@ -5,21 +5,17 @@
  *   mensaje de disponibilidad de fase correctamente.
  * @why Las pantallas placeholder son contratos de routing: si no renderizan,
  *   el navegador lanzaría un error en tiempo de ejecución en esa ruta.
- * @impact Cubre `ObservationLogScreen`, `AstronautsScreen`,
- *   `APODDetailScreen`, `ISSMapScreen` y `AuthScreen`.
+ * @impact Cubre `ObservationLogScreen`, `APODDetailScreen` y `AuthScreen`.
  *   `SolarCatalogScreen` y `BodyDetailScreen` se testean en `src/modules/lists/`.
  *   `AsteroidSearchScreen` fue movida al módulo `forms/` en Fase 3.
  *   `APODGalleryScreen` fue movida al módulo `storage/` en Fase 4.
+ *   `ISSMapScreen` y `AstronautsScreen` fueron movidas al módulo `maps/` en Fase 5.
  */
 
 import React from 'react';
 import { render, screen } from '@testing-library/react-native';
-import {
-  ObservationLogScreen,
-  AstronautsScreen,
-} from '../screens/PlaceholderScreens';
+import { ObservationLogScreen } from '../screens/PlaceholderScreens';
 import { APODDetailScreen } from '../screens/APODDetailScreen';
-import { ISSMapScreen } from '../screens/ISSMapScreen';
 import { AuthScreen } from '../screens/AuthScreen';
 
 describe('ObservationLogScreen', () => {
@@ -27,14 +23,6 @@ describe('ObservationLogScreen', () => {
     render(<ObservationLogScreen />);
     expect(screen.getByText('Diario de Observaciones')).toBeTruthy();
     expect(screen.getByText('Disponible en Fase 10 — Autenticación')).toBeTruthy();
-  });
-});
-
-describe('AstronautsScreen', () => {
-  it('debería renderizar el título y el mensaje de fase', () => {
-    render(<AstronautsScreen />);
-    expect(screen.getByText('Astronautas en el Espacio')).toBeTruthy();
-    expect(screen.getByText('Disponible en Fase 6 — Mapas')).toBeTruthy();
   });
 });
 
@@ -53,14 +41,6 @@ describe('APODDetailScreen', () => {
     render(<APODDetailScreen {...emptyNavProps} />);
     expect(screen.getByText('Imagen del Día')).toBeTruthy();
     expect(screen.getByText('Disponible en Fase 2 — Listas / Fase 7 — Storage')).toBeTruthy();
-  });
-});
-
-describe('ISSMapScreen', () => {
-  it('debería renderizar el título y el mensaje de fase', () => {
-    render(<ISSMapScreen {...emptyNavProps} />);
-    expect(screen.getByText('ISS en Tiempo Real')).toBeTruthy();
-    expect(screen.getByText('Disponible en Fase 6 — Mapas')).toBeTruthy();
   });
 });
 

@@ -72,7 +72,7 @@ export const MODULE_CATALOG: ModuleCatalogItem[] = [
     id: 'maps',
     name: 'Mapas',
     astronomicalUseCase: 'Posición en tiempo real de la ISS',
-    platforms: { android: 'pending', web: 'pending', ios: 'pending' },
+    platforms: { android: 'ready', web: 'ready', ios: 'pending' },
     phase: 6,
   },
   {

@@ -108,18 +108,18 @@
 > **Caso de uso astronómico:** imagen astronómica del día y favoritos  
 > **RF:** RF-APOD-01 al RF-APOD-03, RF-STOR-01 al RF-STOR-04 | **HU:** HU-04, HU-05
 
-- [ ] Implementar `useApod` (TanStack Query → NASA APOD, staleTime 1h)
-- [ ] Pantalla APOD: imagen progresiva, título, descripción, créditos
-- [ ] Soporte de vídeo APOD (abrir en navegador externo)
-- [ ] Navegación a APODs anteriores (≤ 30 días)
-- [ ] Persistir APOD del día en AsyncStorage / MMKV para offline
-- [ ] Sistema de favoritos (planetas) persistido localmente
-- [ ] Historial de búsquedas de asteroides (últimas 10)
-- [ ] Pantalla de gestión de caché con espacio usado y botón borrar
-- [ ] Share API: compartir imagen APOD
-- [ ] Tests: carga, offline fallback, añadir/quitar favorito, historial
-- [ ] Cobertura ≥ 80%
-- [ ] Commit: `feat(storage): APOD viewer with offline cache and favorites`
+- [x] Implementar `useApod` (TanStack Query → NASA APOD, staleTime 1h) — ✅ 2026-04-16
+- [x] Pantalla APOD: imagen progresiva, título, descripción, créditos — ✅ 2026-04-16
+- [x] Soporte de vídeo APOD (abrir en navegador externo) — ✅ 2026-04-16
+- [x] Navegación a APODs anteriores (≤ 30 días) — ✅ 2026-04-16
+- [x] Persistir APOD del día en AsyncStorage para offline — ✅ 2026-04-16
+- [x] Sistema de favoritos (planetas) persistido localmente — ✅ 2026-04-16
+- [x] Historial de búsquedas de asteroides (últimas 10) — ✅ 2026-04-16
+- [x] Pantalla de gestión de caché con espacio usado y botón borrar — ✅ 2026-04-16
+- [x] Share API: compartir imagen APOD — ✅ 2026-04-16
+- [x] Tests: carga, offline fallback, añadir/quitar favorito, historial — 44 tests ✅ 2026-04-16
+- [x] Cobertura ≥ 80% → hooks 100% / APODDetailScreen 52% / ApodMedia 71% — ✅ 2026-04-16
+- [x] Commit: `feat(storage): APOD viewer with offline cache and favorites` → `f94c982` — ✅ 2026-04-16
 
 ---
 
@@ -293,11 +293,11 @@
 
 | Fase | Módulo | Estado |
 |---|---|---|
-| 0 | Fundamentos | 🟡 En progreso |
-| 1 | Navegación | ⬜ Pendiente |
-| 2 | Catálogo solar (lists) | ⬜ Pendiente |
-| 3 | Formularios (forms) | ⬜ Pendiente |
-| 4 | APOD + Storage | ⬜ Pendiente |
+| 0 | Fundamentos | ✅ Completo |
+| 1 | Navegación | ✅ Completo |
+| 2 | Catálogo solar (lists) | ✅ Completo |
+| 3 | Formularios (forms) | ✅ Completo |
+| 4 | APOD + Storage | ✅ Completo |
 | 5 | ISS (maps + realtime) | ⬜ Pendiente |
 | 6 | Artemis (missions + gallery) | ⬜ Pendiente |
 | 7 | Notificaciones | ⬜ Pendiente |

@@ -119,6 +119,15 @@ export type ISSMapScreenProps = CompositeScreenProps<
   >
 >;
 
+/** Props para la pantalla de tripulantes ISS */
+export type AstronautsScreenProps = CompositeScreenProps<
+  NativeStackScreenProps<ISSStackParamList, 'Astronauts'>,
+  CompositeScreenProps<
+    BottomTabScreenProps<TabParamList, 'ISS'>,
+    DrawerScreenProps<DrawerParamList>
+  >
+>;
+
 /** Props para la pantalla APOD */
 export type APODDetailScreenProps = CompositeScreenProps<
   NativeStackScreenProps<APODStackParamList, 'APODDetail'>,
