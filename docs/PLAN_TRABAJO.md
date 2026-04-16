@@ -4,7 +4,7 @@
 **Stack:** Expo SDK 55.0.15 · React Native 0.83 · TypeScript · Supabase · pnpm  
 **Plataformas:** Android → Web → iOS  
 **Narrativa:** planetas · satélites · asteroides · clima espacial · ISS · proyecto Artemis  
-**Última actualización:** Abril 2026
+**Última actualización:** Abril 2026 — Fase 8 completada (288 tests · TS clean)
 
 > Marcar cada ítem con `[x]` al completarlo.  
 > Añadir la fecha de cierre al final del ítem: `[x] descripción — ✅ 2026-04-16`
@@ -185,15 +185,17 @@
 > **Caso de uso astronómico:** mapa estelar controlado por giroscopio  
 > **RF:** RF-SENS-01 al RF-SENS-04 | **HU:** HU-10
 
-- [ ] Instalar expo-sensors con versión exacta y auditar
-- [ ] Implementar `useGyroscope` y `useAccelerometer` con limpieza en unmount
-- [ ] Renderizar ≥ 100 estrellas con coordenadas reales (AR/Dec → XY)
-- [ ] Giroscopio controla rotación; acelerómetro controla inclinación
-- [ ] Fallback a gestos táctiles si no hay giroscopio
-- [ ] Label con nombre de constelación más próxima al centro
-- [ ] Tests: lectura de sensor (mock), fallback táctil, label de constelación
-- [ ] Cobertura ≥ 80%
-- [ ] Commit: `feat(sensors): gyroscope-driven star map with graceful fallback`
+- [x] Instalar `expo-sensors@55.0.13` con versión exacta y auditar — sin CVEs — ✅ 2026-04-16
+- [x] Implementar `useGyroscope` (integración velocidad angular → rotación, reset, cleanup) — ✅ 2026-04-16
+- [x] Implementar `useAccelerometer` (lecturas crudas, cleanup en unmount) — ✅ 2026-04-16
+- [x] Catálogo offline: 120 estrellas con coordenadas reales RA/Dec J2000.0 + 12 constelaciones — ✅ 2026-04-16
+- [x] Giroscopio controla rotación del cielo (proyección equidistante RA/Dec → píxeles) — ✅ 2026-04-16
+- [x] Fallback a gestos táctiles (PanResponder) si no hay giroscopio — ✅ 2026-04-16
+- [x] Label con nombre de constelación más próxima al centro — ✅ 2026-04-16
+- [x] Botón "Centrar" (resetea a Orión) + coordenadas RA/Dec en pantalla — ✅ 2026-04-16
+- [x] Tests: catálogo de datos, `useGyroscope`, `useAccelerometer`, `StarMapScreen` — 30 tests ✅ 2026-04-16
+- [x] Cobertura ≥ 80% → stars 100% / hooks 95%+ / screen 86% stmts / 89% branches — ✅ 2026-04-16
+- [x] Commit: `feat(sensors): gyroscope-driven star map with graceful fallback` → `ea1f5be` — ✅ 2026-04-16
 
 ---
 
@@ -301,8 +303,8 @@
 | 4 | APOD + Storage | ✅ Completo |
 | 5 | ISS (maps + realtime) | 🟡 En progreso |
 | 6 | Artemis (missions + gallery) | ✅ Completo |
-| 7 | Notificaciones | ⬜ Pendiente |
-| 8 | Star Map (sensors) | ⬜ Pendiente |
+| 7 | Notificaciones | ✅ Completo |
+| 8 | Star Map (sensors) | ✅ Completo |
 | 9 | Auth + Perfil | ⬜ Pendiente |
 | 10 | Animaciones | ⬜ Pendiente |
 | 11 | Platform showcase | ⬜ Pendiente |
