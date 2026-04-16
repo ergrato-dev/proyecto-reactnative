@@ -199,21 +199,22 @@
 
 ---
 
-## Fase 9 — Módulo: Autenticación y perfil (`auth/`)
+## Fase 9 — Módulo: Autenticación y perfil (`auth/`) ✅ COMPLETADA
 
 > **Caso de uso astronómico:** diario personal de observaciones  
-> **RF:** RF-AUTH-01 al RF-AUTH-05 | **HU:** HU-11, HU-12, HU-13
+> **RF:** RF-AUTH-01 al RF-AUTH-05 | **HU:** HU-11, HU-12, HU-13  
+> **Commit:** `0e3dc3b` — 317 tests passing (29 nuevos)
 
-- [ ] Instalar @supabase/supabase-js + expo-secure-store con versiones exactas y auditar
-- [ ] Implementar `useAuthSession` (singleton listener `onAuthStateChange`)
-- [ ] Pantalla de registro (email + contraseña, validación Zod)
-- [ ] Pantalla de login con opción biométrica (expo-local-authentication)
-- [ ] Guardar token en expo-secure-store (nunca AsyncStorage sin cifrado)
-- [ ] Migración Supabase: tabla `observations` con RLS
-- [ ] CRUD de observaciones: crear, listar, editar, eliminar
-- [ ] Tests: registro, login, biometría mock, CRUD observaciones mock
-- [ ] Cobertura ≥ 80%
-- [ ] Commit: `feat(auth): Supabase auth with biometrics and observations diary`
+- [x] Instalar @supabase/supabase-js + expo-secure-store con versiones exactas y auditar
+- [x] Implementar `useAuthSession` (singleton listener `onAuthStateChange`)
+- [x] Pantalla de registro (email + contraseña, validación Zod)
+- [x] Pantalla de login con opción biométrica (expo-local-authentication)
+- [x] Guardar token en expo-secure-store (nunca AsyncStorage sin cifrado)
+- [x] Migración Supabase: tabla `observations` con RLS
+- [x] CRUD de observaciones: crear, listar, editar, eliminar
+- [x] Tests: registro, login, biometría mock, CRUD observaciones mock
+- [x] Cobertura ≥ 80%
+- [x] Commit: `feat(auth): Supabase auth with biometrics and observations diary`
 
 ---
 
