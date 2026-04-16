@@ -223,15 +223,15 @@
 > **Caso de uso astronómico:** órbitas planetarias animadas  
 > **RF:** RF-ANIM-01 al RF-ANIM-04 | **HU:** HU-03
 
-- [ ] Instalar react-native-reanimated + react-native-gesture-handler con versiones exactas y auditar
-- [ ] Animar órbitas de Mercurio, Venus, Tierra y Marte (worklet en UI thread)
-- [ ] Velocidades proporcionales a períodos orbitales reales
-- [ ] Controles de pausa / reanudación
-- [ ] Drag para rotar planeta en 3D (Gesture Handler)
-- [ ] Spring zoom al seleccionar planeta
-- [ ] Tests: animación pausa/resume, gesto drag (mock), spring trigger
-- [ ] Cobertura ≥ 80%
-- [ ] Commit: `feat(animations): orbital animations with Reanimated 3 worklets`
+- [x] Instalar react-native-reanimated + react-native-gesture-handler con versiones exactas y auditar
+- [x] Animar órbitas de Mercurio, Venus, Tierra y Marte (worklet en UI thread)
+- [x] Velocidades proporcionales a períodos orbitales reales
+- [x] Controles de pausa / reanudación
+- [x] Drag para rotar planeta en 3D (Gesture Handler)
+- [x] Spring zoom al seleccionar planeta
+- [x] Tests: animación pausa/resume, gesto drag (mock), spring trigger
+- [x] Cobertura ≥ 80%
+- [x] Commit: `feat(animations): orbital animations with Reanimated 4 worklets`
 
 ---
 
@@ -307,7 +307,7 @@
 | 7 | Notificaciones | ✅ Completo |
 | 8 | Star Map (sensors) | ✅ Completo |
 | 9 | Auth + Perfil | ⬜ Pendiente |
-| 10 | Animaciones | ⬜ Pendiente |
+| 10 | Animaciones | ✅ Completo |
 | 11 | Platform showcase | ⬜ Pendiente |
 | 12 | Cámara AR ⚡ | ⬜ Stretch goal |
 | 13 | Pulido y entrega | ⬜ Pendiente |
