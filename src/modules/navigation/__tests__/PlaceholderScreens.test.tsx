@@ -5,16 +5,15 @@
  *   mensaje de disponibilidad de fase correctamente.
  * @why Las pantallas placeholder son contratos de routing: si no renderizan,
  *   el navegador lanzaría un error en tiempo de ejecución en esa ruta.
- * @impact Cubre `AsteroidSearchScreen`, `ObservationLogScreen`,
- *   `APODGalleryScreen`, `AstronautsScreen`, `APODDetailScreen`,
- *   `ISSMapScreen` y `AuthScreen`.
+ * @impact Cubre `ObservationLogScreen`, `APODGalleryScreen`, `AstronautsScreen`,
+ *   `APODDetailScreen`, `ISSMapScreen` y `AuthScreen`.
  *   `SolarCatalogScreen` y `BodyDetailScreen` se testean en `src/modules/lists/`.
+ *   `AsteroidSearchScreen` fue movida al módulo `forms/` en Fase 3.
  */
 
 import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 import {
-  AsteroidSearchScreen,
   ObservationLogScreen,
   APODGalleryScreen,
   AstronautsScreen,
@@ -22,14 +21,6 @@ import {
 import { APODDetailScreen } from '../screens/APODDetailScreen';
 import { ISSMapScreen } from '../screens/ISSMapScreen';
 import { AuthScreen } from '../screens/AuthScreen';
-
-describe('AsteroidSearchScreen', () => {
-  it('debería renderizar el título y el mensaje de fase', () => {
-    render(<AsteroidSearchScreen />);
-    expect(screen.getByText('Búsqueda de Asteroides')).toBeTruthy();
-    expect(screen.getByText('Disponible en Fase 3 — Formularios')).toBeTruthy();
-  });
-});
 
 describe('ObservationLogScreen', () => {
   it('debería renderizar el título y el mensaje de fase', () => {

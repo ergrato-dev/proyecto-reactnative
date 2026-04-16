@@ -14,7 +14,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { ExploreStackParamList } from '../types';
 import { HomeScreen } from '../screens/HomeScreen';
 import { SolarCatalogScreen, BodyDetailScreen } from '@/modules/lists';
-import { AsteroidSearchScreen } from '../screens/PlaceholderScreens';
+import { AsteroidSearchScreen } from '@/modules/forms';
 
 const Stack = createNativeStackNavigator<ExploreStackParamList>();
 

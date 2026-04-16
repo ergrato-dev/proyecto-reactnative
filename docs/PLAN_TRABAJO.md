@@ -3,6 +3,7 @@
 **Proyecto:** CosmosRN — Showcase app de astronomía básica en React Native  
 **Stack:** Expo SDK 55.0.15 · React Native 0.83 · TypeScript · Supabase · pnpm  
 **Plataformas:** Android → Web → iOS  
+**Narrativa:** planetas · satélites · asteroides · clima espacial · ISS · proyecto Artemis  
 **Última actualización:** Abril 2026
 
 > Marcar cada ítem con `[x]` al completarlo.  
@@ -143,7 +144,24 @@
 
 ---
 
-## Fase 6 — Módulo: Notificaciones (`notifications/`)
+## Fase 6 — Módulo: Proyecto Artemis (`artemis/`)
+
+> **Caso de uso astronómico:** estado de misiones lunares, cronograma de lanzamientos y galería de imágenes oficiales de la NASA  
+> **RF:** RF-ART-01 al RF-ART-04 | **HU:** HU-16 _(añadir a `user-stories.md`)_
+
+- [ ] Añadir `fetchArtemisImages` a `nasaClient.ts` (NASA Images API — `images-api.nasa.gov`, sin auth)
+- [ ] Implementar `useArtemisImages` (TanStack Query, staleTime 6h)
+- [ ] Datos estáticos de misiones: Artemis I (completada 2022), Artemis II (tripulada 2026), Artemis III (alunizaje 2027+)
+- [ ] `MissionStatusScreen` — lista de misiones con estado, tripulación y fecha objetivo (FlatList)
+- [ ] `ArtemisGalleryScreen` — galería horizontal de imágenes oficiales con título y fecha
+- [ ] Añadir entrada en el Drawer para acceso directo a la sección Artemis
+- [ ] Tests: render lista de misiones, estados completada/en-progreso/planificada, carga de galería
+- [ ] Cobertura ≥ 80%
+- [ ] Commit: `feat(artemis): mission status screen and NASA image gallery`
+
+---
+
+## Fase 7 — Módulo: Notificaciones (`notifications/`)
 
 > **Caso de uso astronómico:** alertas de tormentas solares y paso de la ISS  
 > **RF:** RF-NOTIF-01 al RF-NOTIF-04 | **HU:** HU-09
@@ -161,7 +179,7 @@
 
 ---
 
-## Fase 7 — Módulo: Sensores / Star Map (`sensors/`)
+## Fase 8 — Módulo: Sensores / Star Map (`sensors/`)
 
 > **Caso de uso astronómico:** mapa estelar controlado por giroscopio  
 > **RF:** RF-SENS-01 al RF-SENS-04 | **HU:** HU-10
@@ -178,7 +196,7 @@
 
 ---
 
-## Fase 8 — Módulo: Autenticación y perfil (`auth/`)
+## Fase 9 — Módulo: Autenticación y perfil (`auth/`)
 
 > **Caso de uso astronómico:** diario personal de observaciones  
 > **RF:** RF-AUTH-01 al RF-AUTH-05 | **HU:** HU-11, HU-12, HU-13
@@ -196,7 +214,7 @@
 
 ---
 
-## Fase 9 — Módulo: Animaciones (`animations/`)
+## Fase 10 — Módulo: Animaciones (`animations/`)
 
 > **Caso de uso astronómico:** órbitas planetarias animadas  
 > **RF:** RF-ANIM-01 al RF-ANIM-04 | **HU:** HU-03
@@ -213,7 +231,7 @@
 
 ---
 
-## Fase 10 — Módulo: Diferencias de plataforma (`platform/`)
+## Fase 11 — Módulo: Diferencias de plataforma (`platform/`)
 
 > **Caso de uso astronómico:** comparativa Android/Web/iOS  
 > **RF:** RF-PLAT-01 al RF-PLAT-03 | **HU:** HU-14
@@ -228,7 +246,7 @@
 
 ---
 
-## Fase 11 — Módulo: Cámara AR (`camera/`) ⚡ Stretch goal
+## Fase 12 — Módulo: Cámara AR (`camera/`) ⚡ Stretch goal
 
 > **Caso de uso astronómico:** overlay de constelaciones en AR  
 > **RF:** RF-CAM-01 al RF-CAM-05
@@ -245,15 +263,15 @@
 
 ---
 
-## Fase 12 — Pulido y entrega académica
+## Fase 13 — Pulido y entrega académica
 
-### 12.1 Tema y accesibilidad
+### 13.1 Tema y accesibilidad
 - [ ] Implementar sistema de tema dark/light en `src/shared/theme/`
 - [ ] Verificar contraste WCAG AA en todos los textos
 - [ ] Añadir `accessibilityLabel` y `accessibilityRole` en todos los elementos interactivos
 - [ ] Tamaño mínimo de área táctil 44×44 dp verificado
 
-### 12.2 Calidad final
+### 13.2 Calidad final
 - [ ] `pnpm lint` — cero errores
 - [ ] `pnpm tsc --noEmit` — cero errores de tipos
 - [ ] `pnpm test --coverage` — todos los módulos ≥ 80%
@@ -261,12 +279,12 @@
 - [ ] Revisar que no hay `// TODO` sin issue asociado
 - [ ] Revisar que no hay `@ts-ignore` sin comentario justificativo
 
-### 12.3 Documentación final
+### 13.3 Documentación final
 - [ ] Completar TSDoc (`@what / @why / @impact`) en todos los módulos
 - [ ] Actualizar `README.md` con instrucciones de instalación y ejecución
 - [ ] Verificar que `.env.example` está actualizado con todas las variables
 
-### 12.4 Commit de cierre
+### 13.4 Commit de cierre
 - [ ] Commit: `docs(project): finalize academic documentation and coverage report`
 
 ---
@@ -281,12 +299,13 @@
 | 3 | Formularios (forms) | ⬜ Pendiente |
 | 4 | APOD + Storage | ⬜ Pendiente |
 | 5 | ISS (maps + realtime) | ⬜ Pendiente |
-| 6 | Notificaciones | ⬜ Pendiente |
-| 7 | Star Map (sensors) | ⬜ Pendiente |
-| 8 | Auth + Perfil | ⬜ Pendiente |
-| 9 | Animaciones | ⬜ Pendiente |
-| 10 | Platform showcase | ⬜ Pendiente |
-| 11 | Cámara AR ⚡ | ⬜ Stretch goal |
-| 12 | Pulido y entrega | ⬜ Pendiente |
+| 6 | Artemis (missions + gallery) | ⬜ Pendiente |
+| 7 | Notificaciones | ⬜ Pendiente |
+| 8 | Star Map (sensors) | ⬜ Pendiente |
+| 9 | Auth + Perfil | ⬜ Pendiente |
+| 10 | Animaciones | ⬜ Pendiente |
+| 11 | Platform showcase | ⬜ Pendiente |
+| 12 | Cámara AR ⚡ | ⬜ Stretch goal |
+| 13 | Pulido y entrega | ⬜ Pendiente |
 
 **Leyenda:** ✅ Completo · 🟡 En progreso · ⬜ Pendiente · ⚡ Stretch goal
