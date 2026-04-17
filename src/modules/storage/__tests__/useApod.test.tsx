@@ -78,9 +78,11 @@ const MOCK_APOD_VIDEO: ApodResponse = {
  */
 function createWrapper() {
   const qc = new QueryClient({ defaultOptions: { queries: { retry: 0 } } });
-  return ({ children }: { children: React.ReactNode }) => (
+  const Wrapper = ({ children }: { children: React.ReactNode }) => (
     <QueryClientProvider client={qc}>{children}</QueryClientProvider>
   );
+  Wrapper.displayName = 'TestQueryWrapper';
+  return Wrapper;
 }
 
 // ─── Suites ───────────────────────────────────────────────────────────────────

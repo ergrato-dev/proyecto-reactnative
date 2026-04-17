@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
+import type { NetInfoState } from '@react-native-community/netinfo';
+import NetInfo from '@react-native-community/netinfo';
 
 /** Callback que se invoca cuando se recupera la conexión */
 export type ReconnectCallback = () => void;

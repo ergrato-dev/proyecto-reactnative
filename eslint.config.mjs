@@ -39,7 +39,9 @@ export default [
       },
     },
     settings: {
-      react: { version: 'detect' },
+      // Versión fija — evita llamar a detectReactVersion() que usa context.getFilename()
+      // eliminado en ESLint 10 (eslint-plugin-react@7.37.5 aún usa la API antigua).
+      react: { version: '19.1.0' },
     },
     rules: {
       // TypeScript

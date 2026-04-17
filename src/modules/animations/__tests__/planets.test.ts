@@ -8,7 +8,8 @@
  * @impact Puramente datos — sin dependencias nativas ni mocks.
  */
 
-import { PLANETS, PlanetData } from '../data/planets';
+import type { PlanetData } from '../data/planets';
+import { PLANETS } from '../data/planets';
 
 describe('PLANETS — datos orbitales', () => {
   it('contiene exactamente 4 planetas', () => {

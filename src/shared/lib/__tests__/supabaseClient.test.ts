@@ -31,7 +31,7 @@ describe('supabaseClient', () => {
 
     // Act — require() síncrono del singleton; las variables de entorno
     // se inyectan desde jest.setup.js antes de ejecutar cualquier test
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
+     
     const { supabase } = require('../supabaseClient') as { supabase: unknown };
 
     // Assert — el cliente existe

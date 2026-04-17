@@ -10,7 +10,8 @@ import {
 } from 'react-native';
 import type { DrawerScreenProps } from '@react-navigation/drawer';
 
-import { CATEGORY_LABELS, PlatformDifference } from '../data/differences';
+import type { PlatformDifference } from '../data/differences';
+import { CATEGORY_LABELS } from '../data/differences';
 import { DifferenceCard } from '../components/DifferenceCard';
 import { usePlatformCapabilities } from '../hooks/usePlatformCapabilities';
 import type { DrawerParamList } from '@/modules/navigation/types';

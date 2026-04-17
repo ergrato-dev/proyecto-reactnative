@@ -31,19 +31,19 @@ import { useNetworkReconnect } from '@/modules/realtime/hooks/useNetworkReconnec
 // para evitar errores de compilación en la plataforma web.
 const MapView =
   Platform.OS !== 'web'
-    ? // eslint-disable-next-line @typescript-eslint/no-var-requires
+    ?  
       (require('react-native-maps').default as React.ComponentType<MapViewProps>)
     : null;
 
 const Marker =
   Platform.OS !== 'web'
-    ? // eslint-disable-next-line @typescript-eslint/no-var-requires
+    ?  
       (require('react-native-maps').Marker as React.ComponentType<MarkerProps>)
     : null;
 
 const Polyline =
   Platform.OS !== 'web'
-    ? // eslint-disable-next-line @typescript-eslint/no-var-requires
+    ?  
       (require('react-native-maps').Polyline as React.ComponentType<PolylineProps>)
     : null;
 

@@ -15,7 +15,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import type { DrawerScreenProps } from '@react-navigation/drawer';
 
-import { PLANETS, PlanetData } from '../data/planets';
+import type { PlanetData } from '../data/planets';
+import { PLANETS } from '../data/planets';
 import { OrbitingPlanet } from '../components/OrbitingPlanet';
 import { useOrbitAnimation } from '../hooks/useOrbitAnimation';
 import type { DrawerParamList } from '@/modules/navigation/types';

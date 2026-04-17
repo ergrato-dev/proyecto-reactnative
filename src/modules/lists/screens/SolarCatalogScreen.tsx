@@ -105,7 +105,13 @@ function ErrorView({ onRetry }: { onRetry: () => void }) {
   return (
     <View style={styles.centered} testID="error-view">
       <Text style={styles.errorText}>No se pudo cargar el catálogo solar.</Text>
-      <TouchableOpacity style={styles.retryButton} onPress={onRetry} testID="retry-button">
+      <TouchableOpacity
+        style={styles.retryButton}
+        onPress={onRetry}
+        testID="retry-button"
+        accessibilityLabel="Reintentar carga del catálogo"
+        accessibilityRole="button"
+      >
         <Text style={styles.retryText}>Reintentar</Text>
       </TouchableOpacity>
     </View>
@@ -138,6 +144,8 @@ function ModeToggle({ mode, onToggle }: { mode: ViewMode; onToggle: (m: ViewMode
         style={[styles.modeButton, mode === 'sectioned' && styles.modeButtonActive]}
         onPress={() => onToggle('sectioned')}
         testID="toggle-sectioned"
+        accessibilityLabel="Vista por tipo"
+        accessibilityRole="button"
       >
         <Text style={[styles.modeButtonText, mode === 'sectioned' && styles.modeButtonTextActive]}>
           Por tipo
@@ -147,6 +155,8 @@ function ModeToggle({ mode, onToggle }: { mode: ViewMode; onToggle: (m: ViewMode
         style={[styles.modeButton, mode === 'flat' && styles.modeButtonActive]}
         onPress={() => onToggle('flat')}
         testID="toggle-flat"
+        accessibilityLabel="Vista lista plana"
+        accessibilityRole="button"
       >
         <Text style={[styles.modeButtonText, mode === 'flat' && styles.modeButtonTextActive]}>
           Lista plana

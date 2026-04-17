@@ -1,9 +1,10 @@
+import type {
+  SupportLevel} from '../data/differences';
 import {
   CATEGORY_LABELS,
   getCurrentPlatform,
   PLATFORM_DIFFERENCES,
-  SUPPORT_ICON,
-  SupportLevel,
+  SUPPORT_ICON
 } from '../data/differences';
 
 /**

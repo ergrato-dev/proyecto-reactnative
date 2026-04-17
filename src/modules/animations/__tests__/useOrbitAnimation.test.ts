@@ -25,7 +25,7 @@ jest.mock('react-native-reanimated', () => ({
 }));
 
 // Acceso a los mocks tras el hoisting
-import * as Reanimated from 'react-native-reanimated';
+import type * as Reanimated from 'react-native-reanimated';
 const mockedReanimated = jest.requireMock<typeof Reanimated>('react-native-reanimated');
 
 // ─── Import del hook bajo test (después del mock) ─────────────────────────────

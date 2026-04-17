@@ -17,9 +17,9 @@ import { renderHook, act } from '@testing-library/react-native';
 
 jest.mock('expo-camera', () => ({
   CameraView: ({ testID, children }: { testID?: string; children?: React.ReactNode }) => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+     
     const { createElement } = require('react');
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+     
     const { View } = require('react-native');
     return createElement(View, { testID }, children);
   },
@@ -32,9 +32,9 @@ jest.mock('expo-camera', () => ({
 }));
 
 jest.mock('react-native-svg', () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+   
   const { createElement } = require('react');
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+   
   const RN = require('react-native');
   const Wrapper = ({ children, ...p }: { children?: unknown }) =>
     createElement(RN.View, p, children);

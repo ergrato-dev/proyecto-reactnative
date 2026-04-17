@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
 import { Platform, useWindowDimensions } from 'react-native';
 
+import type {
+  PlatformDifference,
+  SupportedPlatform} from '../data/differences';
 import {
   getCurrentPlatform,
-  PLATFORM_DIFFERENCES,
-  PlatformDifference,
-  SupportedPlatform,
+  PLATFORM_DIFFERENCES
 } from '../data/differences';
 
 /** Punto de quiebre de layout */

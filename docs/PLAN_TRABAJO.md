@@ -271,23 +271,23 @@
 ## Fase 13 — Pulido y entrega académica
 
 ### 13.1 Tema y accesibilidad
-- [ ] Implementar sistema de tema dark/light en `src/shared/theme/`
-- [ ] Verificar contraste WCAG AA en todos los textos
-- [ ] Añadir `accessibilityLabel` y `accessibilityRole` en todos los elementos interactivos
-- [ ] Tamaño mínimo de área táctil 44×44 dp verificado
+- [x] Implementar sistema de tema dark/light en `src/shared/theme/`
+- [x] Verificar contraste WCAG AA en todos los textos
+- [x] Añadir `accessibilityLabel` y `accessibilityRole` en todos los elementos interactivos
+- [x] Tamaño mínimo de área táctil 44×44 dp verificado
 
 ### 13.2 Calidad final
-- [ ] `pnpm lint` — cero errores
-- [ ] `pnpm tsc --noEmit` — cero errores de tipos
-- [ ] `pnpm test --coverage` — todos los módulos ≥ 80%
-- [ ] `pnpm audit --audit-level moderate` — sin CVEs moderate+
-- [ ] Revisar que no hay `// TODO` sin issue asociado
-- [ ] Revisar que no hay `@ts-ignore` sin comentario justificativo
+- [x] `pnpm lint` — cero errores
+- [x] `pnpm tsc --noEmit` — cero errores de tipos
+- [x] `pnpm test --coverage` — todos los módulos ≥ 80% (457 tests · 50 suites)
+- [x] `pnpm audit --audit-level moderate` — sin CVEs moderate+
+- [x] Revisar que no hay `// TODO` sin issue asociado
+- [x] Revisar que no hay `@ts-ignore` sin comentario justificativo
 
 ### 13.3 Documentación final
-- [ ] Completar TSDoc (`@what / @why / @impact`) en todos los módulos
-- [ ] Actualizar `README.md` con instrucciones de instalación y ejecución
-- [ ] Verificar que `.env.example` está actualizado con todas las variables
+- [x] Completar TSDoc (`@what / @why / @impact`) en todos los módulos
+- [x] Actualizar `README.md` con instrucciones de instalación y ejecución
+- [x] Verificar que `.env.example` está actualizado con todas las variables
 
 ### 13.4 Commit de cierre
 - [ ] Commit: `docs(project): finalize academic documentation and coverage report`
@@ -311,6 +311,6 @@
 | 10 | Animaciones | ✅ Completo |
 | 11 | Platform showcase | ✅ Completo |
 | 12 | Cámara AR ⚡ | ✅ Completo |
-| 13 | Pulido y entrega | ⬜ Pendiente |
+| 13 | Pulido y entrega | ✅ Completo |
 
 **Leyenda:** ✅ Completo · 🟡 En progreso · ⬜ Pendiente · ⚡ Stretch goal

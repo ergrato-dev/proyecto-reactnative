@@ -72,7 +72,7 @@ export function useBiometrics(): UseBiometricsResult {
             error: null,
           });
         }
-      } catch (err) {
+      } catch {
         if (!cancelled) {
           setState({ isAvailable: false, biometryType: null, loading: false, error: null });
         }

@@ -1,13 +1,14 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import type {
+  SharedValue} from 'react-native-reanimated';
 import Animated, {
-  SharedValue,
   useAnimatedStyle,
   withSpring,
   useSharedValue,
 } from 'react-native-reanimated';
 
-import { PlanetData } from '../data/planets';
+import type { PlanetData } from '../data/planets';
 
 interface OrbitingPlanetProps {
   /** Datos del planeta (color, radio, radio orbital) */
@@ -82,7 +83,12 @@ export function OrbitingPlanet({
         style={[styles.planetContainer, animatedStyle]}
         testID={`planet-${planet.id}`}
       >
-        <TouchableOpacity onPress={handlePress} activeOpacity={0.8}>
+        <TouchableOpacity
+          onPress={handlePress}
+          activeOpacity={0.8}
+          accessibilityRole="button"
+          accessibilityLabel={`Ver detalles de ${planet.name}`}
+        >
           <View
             style={[
               styles.planet,

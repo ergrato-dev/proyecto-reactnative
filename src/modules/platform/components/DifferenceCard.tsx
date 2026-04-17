@@ -6,9 +6,10 @@ import {
   View,
 } from 'react-native';
 
-import {
+import type {
   PlatformDifference,
-  SupportedPlatform,
+  SupportedPlatform} from '../data/differences';
+import {
   SUPPORT_ICON,
 } from '../data/differences';
 

@@ -261,7 +261,12 @@ export function BodyDetailScreen({ route }: BodyDetailScreenProps) {
       )}
 
       {/* Enlace a NASAClient (placeholder para Fase futura) */}
-      <TouchableOpacity style={styles.moreButton} testID="more-button">
+      <TouchableOpacity
+        style={styles.moreButton}
+        testID="more-button"
+        accessibilityLabel="Ver más información en NASA"
+        accessibilityRole="button"
+      >
         <Text style={styles.moreButtonText}>Ver más en NASA</Text>
       </TouchableOpacity>
     </ScrollView>
