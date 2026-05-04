@@ -11,7 +11,7 @@
  */
 
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react-native';
+import { render, screen, fireEvent, act } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { APODDetailScreen } from '../screens/APODDetailScreen';
 
@@ -252,5 +252,105 @@ describe('APODDetailScreen', () => {
     fireEvent.press(screen.getByTestId('apod-prev-button'));
     const labelDespues = screen.getByTestId('apod-date-label').props.children as string;
     expect(labelDespues).not.toBe(labelAntes);
+  });
+
+  // ── handleShare ────────────────────────────────────────────────────────────
+
+  it('debería compartir usando Share.share cuando media_type es video', async () => {
+    const { Share } = require('react-native');
+    jest.spyOn(Share, 'share').mockResolvedValue({ action: 'sharedAction' });
+
+    mockUseApod.mockReturnValue({
+      data: MOCK_APOD_VIDEO,
+      isLoading: false,
+      isError: false,
+      isFetching: false,
+      error: null,
+    } as ReturnType<typeof useApod>);
+
+    renderWithQuery(<APODDetailScreen {...navProps} />);
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('share-button'));
+    });
+    expect(Share.share).toHaveBeenCalledWith({
+      message: `${MOCK_APOD_VIDEO.title}\n${MOCK_APOD_VIDEO.url}`,
+    });
+
+    jest.restoreAllMocks();
+  });
+
+  it('debería compartir con Share.share cuando expo-sharing no está disponible', async () => {
+    const { Share } = require('react-native');
+    const Sharing = require('expo-sharing');
+    jest.spyOn(Share, 'share').mockResolvedValue({ action: 'sharedAction' });
+    Sharing.isAvailableAsync.mockResolvedValue(false);
+
+    mockUseApod.mockReturnValue({
+      data: MOCK_APOD_IMAGE,
+      isLoading: false,
+      isError: false,
+      isFetching: false,
+      error: null,
+    } as ReturnType<typeof useApod>);
+
+    renderWithQuery(<APODDetailScreen {...navProps} />);
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('share-button'));
+    });
+    expect(Share.share).toHaveBeenCalledWith({
+      message: `${MOCK_APOD_IMAGE.title}\n${MOCK_APOD_IMAGE.url}`,
+    });
+
+    jest.restoreAllMocks();
+  });
+
+  it('debería usar fallback Share.share cuando la descarga de imagen falla', async () => {
+    const { Share } = require('react-native');
+    const Sharing = require('expo-sharing');
+    const FileSystem = require('expo-file-system');
+
+    jest.spyOn(Share, 'share').mockResolvedValue({ action: 'sharedAction' });
+    Sharing.isAvailableAsync.mockResolvedValue(true);
+    // Simula error en la descarga del archivo
+    FileSystem.File.mockImplementation(() => { throw new Error('descarga fallida'); });
+
+    mockUseApod.mockReturnValue({
+      data: MOCK_APOD_IMAGE,
+      isLoading: false,
+      isError: false,
+      isFetching: false,
+      error: null,
+    } as ReturnType<typeof useApod>);
+
+    renderWithQuery(<APODDetailScreen {...navProps} />);
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('share-button'));
+    });
+    // El catch silencioso hace fallback a Share nativo
+    expect(Share.share).toHaveBeenCalledWith({
+      message: `${MOCK_APOD_IMAGE.title}\n${MOCK_APOD_IMAGE.url}`,
+    });
+
+    jest.restoreAllMocks();
+  });
+
+  it('no debe llamar a Share si no hay datos', async () => {
+    const { Share } = require('react-native');
+    jest.spyOn(Share, 'share').mockResolvedValue({ action: 'sharedAction' });
+
+    mockUseApod.mockReturnValue({
+      data: undefined,
+      isLoading: true,
+      isError: false,
+      isFetching: true,
+      error: null,
+    } as ReturnType<typeof useApod>);
+
+    renderWithQuery(<APODDetailScreen {...navProps} />);
+    // El botón compartir no se renderiza cuando no hay datos (sección {data && (...)})
+    expect(screen.queryByTestId('share-button')).toBeNull();
+    expect(Share.share).not.toHaveBeenCalled();
+
+    jest.restoreAllMocks();
   });
 });

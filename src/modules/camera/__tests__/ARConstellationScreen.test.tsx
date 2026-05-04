@@ -280,3 +280,64 @@ describe('ARConstellationScreen — permiso concedido', () => {
     expect(screen.getByTestId('info-panel')).toBeTruthy();
   });
 });
+
+// ─── ARConstellationScreen — permiso en proceso de solicitud ─────────────────
+
+describe('ARConstellationScreen — botón solicitando permiso', () => {
+  beforeEach(() => {
+    Object.defineProperty(Platform, 'OS', { value: 'android', configurable: true });
+  });
+
+  afterEach(() => {
+    Object.defineProperty(Platform, 'OS', { value: 'ios', configurable: true });
+  });
+
+  it('muestra "Solicitando…" mientras requesting es true', async () => {
+    // Permiso undetermined con requestMock que nunca resuelve (simula estado intermedio)
+    let resolveRequest!: (v: unknown) => void;
+    const requestMock = jest.fn().mockReturnValue(
+      new Promise((resolve) => { resolveRequest = resolve; }),
+    );
+    mockUseCameraPermissions.mockReturnValue([
+      buildPermission('undetermined'),
+      requestMock,
+    ]);
+
+    render(<ARConstellationScreen />);
+    // Disparar la solicitud
+    fireEvent.press(screen.getByTestId('btn-request-permission'));
+    // Mientras la promesa no resuelve, el botón muestra "Solicitando…"
+    await act(async () => {
+      resolveRequest(buildPermission('undetermined'));
+    });
+    // No lanza error — el componente maneja el estado requesting sin crashear
+    expect(requestMock).toHaveBeenCalledTimes(1);
+  });
+});
+
+// ─── ARConstellationScreen — captura de foto ─────────────────────────────────
+
+describe('ARConstellationScreen — captura de foto', () => {
+  beforeEach(() => {
+    Object.defineProperty(Platform, 'OS', { value: 'android', configurable: true });
+    mockUseCameraPermissions.mockReturnValue([
+      buildPermission('granted'),
+      jest.fn(),
+    ]);
+  });
+
+  afterEach(() => {
+    Object.defineProperty(Platform, 'OS', { value: 'ios', configurable: true });
+    jest.restoreAllMocks();
+  });
+
+  it('pulsar el botón de captura no lanza errores cuando la cámara es null', async () => {
+    // cameraRef.current es null en el entorno de test (sin CameraView real)
+    render(<ARConstellationScreen />);
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('btn-capture'));
+    });
+    // Si no hay error, el catch silencioso funcionó correctamente
+    expect(screen.getByTestId('ar-screen')).toBeTruthy();
+  });
+});

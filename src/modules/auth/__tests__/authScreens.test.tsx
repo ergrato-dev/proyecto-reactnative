@@ -7,7 +7,7 @@
  * - ObservationsScreen: carga, lista vacía, lista con datos
  */
 import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react-native';
+import { render, screen, fireEvent, act } from '@testing-library/react-native';
 import { LoginScreen } from '../screens/LoginScreen';
 import { RegisterScreen } from '../screens/RegisterScreen';
 import { ObservationsScreen } from '../screens/ObservationsScreen';
@@ -56,6 +56,7 @@ function buildAuthActions(overrides = {}) {
     login: jest.fn().mockResolvedValue(undefined),
     logout: jest.fn().mockResolvedValue(undefined),
     register: jest.fn().mockResolvedValue(undefined),
+    clearError: jest.fn(),
     ...overrides,
   };
 }
@@ -66,7 +67,10 @@ function buildBiometrics(overrides = {}) {
     biometryType: null,
     loading: false,
     error: null,
+    failCount: 0,
+    isLocked: false,
     authenticate: jest.fn().mockResolvedValue({ success: false }),
+    resetLock: jest.fn(),
     ...overrides,
   };
 }
@@ -170,10 +174,67 @@ describe('LoginScreen', () => {
       expect(screen.getByTestId('biometric-button')).toBeTruthy();
     });
 
+    it('llama a biometrics.authenticate al pulsar el botón biométrico', async () => {
+      const authenticateMock = jest.fn().mockResolvedValue(false);
+      mockBiometrics.mockReturnValue(
+        buildBiometrics({ isAvailable: true, authenticate: authenticateMock }),
+      );
+      render(<LoginScreen {...fakeLoginProps} />);
+      await act(async () => {
+        fireEvent.press(screen.getByTestId('biometric-button'));
+      });
+      expect(authenticateMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('muestra error biométrico cuando authenticate falla con error', async () => {
+      const authenticateMock = jest.fn().mockResolvedValue(false);
+      mockBiometrics.mockReturnValue(
+        buildBiometrics({
+          isAvailable: true,
+          authenticate: authenticateMock,
+          error: 'Biometría no disponible',
+        }),
+      );
+      render(<LoginScreen {...fakeLoginProps} />);
+      // El error de biometría se muestra como displayError
+      expect(screen.getByTestId('error-banner')).toBeTruthy();
+    });
+
+    it('muestra el error de autenticación de Supabase cuando authState.error existe', () => {
+      mockAuthActions.mockReturnValue(
+        buildAuthActions({ state: { loading: false, error: 'Credenciales incorrectas' } }),
+      );
+      render(<LoginScreen {...fakeLoginProps} />);
+      expect(screen.getByTestId('error-banner')).toBeTruthy();
+      expect(screen.getByText('Credenciales incorrectas')).toBeTruthy();
+    });
+
     it('navega a registro al pulsar el enlace', () => {
       render(<LoginScreen {...fakeLoginProps} />);
       fireEvent.press(screen.getByTestId('go-to-register-button'));
       expect(fakeNavigation.navigate).toHaveBeenCalledWith('Register');
+    });
+
+    it('oculta el botón biométrico y muestra el banner de bloqueo cuando isLocked=true', () => {
+      mockBiometrics.mockReturnValue(
+        buildBiometrics({ isAvailable: true, biometryType: 'Huella dactilar', isLocked: true }),
+      );
+      render(<LoginScreen {...fakeLoginProps} />);
+      // El botón biométrico no debe aparecer
+      expect(screen.queryByTestId('biometric-button')).toBeNull();
+      // El banner de bloqueo sí debe aparecer
+      expect(screen.getByTestId('biometric-locked-banner')).toBeTruthy();
+      expect(screen.getByText(/usa tu contraseña/i)).toBeTruthy();
+    });
+
+    it('llama a resetLock al pulsar "Reintentar biometría" en el banner de bloqueo', () => {
+      const resetLockMock = jest.fn();
+      mockBiometrics.mockReturnValue(
+        buildBiometrics({ isAvailable: true, isLocked: true, resetLock: resetLockMock }),
+      );
+      render(<LoginScreen {...fakeLoginProps} />);
+      fireEvent.press(screen.getByTestId('biometric-reset-button'));
+      expect(resetLockMock).toHaveBeenCalledTimes(1);
     });
   });
 });
@@ -238,6 +299,7 @@ describe('ObservationsScreen', () => {
         loading: true,
         error: null,
         create: jest.fn(),
+        update: jest.fn(),
         remove: jest.fn(),
         refresh: jest.fn(),
       });
@@ -253,6 +315,7 @@ describe('ObservationsScreen', () => {
         loading: false,
         error: null,
         create: jest.fn(),
+        update: jest.fn(),
         remove: jest.fn(),
         refresh: jest.fn(),
       });
@@ -273,6 +336,7 @@ describe('ObservationsScreen', () => {
         loading: false,
         error: null,
         create: jest.fn(),
+        update: jest.fn(),
         remove: jest.fn(),
         refresh: jest.fn(),
       });
@@ -301,6 +365,95 @@ describe('ObservationsScreen', () => {
       fireEvent.press(screen.getByTestId('cancel-form-button'));
       expect(screen.queryByTestId('new-observation-form')).toBeNull();
     });
+
+    it('guarda una observación válida al pulsar "Guardar"', async () => {
+      const createMock = jest.fn().mockResolvedValue(true);
+      mockObservations.mockReturnValue({
+        observations: mockObs as never,
+        loading: false,
+        error: null,
+        create: createMock,
+        update: jest.fn(),
+        remove: jest.fn(),
+        refresh: jest.fn(),
+      });
+
+      render(<ObservationsScreen {...fakeObsProps} />);
+      fireEvent.press(screen.getByTestId('add-observation-button'));
+      fireEvent.changeText(screen.getByTestId('title-input'), 'Saturno');
+      fireEvent.changeText(screen.getByTestId('body-input'), 'planeta');
+      await act(async () => {
+        fireEvent.press(screen.getByTestId('save-observation-button'));
+      });
+      expect(createMock).toHaveBeenCalledTimes(1);
+      expect(createMock).toHaveBeenCalledWith(
+        expect.objectContaining({ title: 'Saturno', body: 'planeta' }),
+      );
+    });
+
+    it('no llama a create cuando faltan campos obligatorios', async () => {
+      const createMock = jest.fn().mockResolvedValue(true);
+      mockObservations.mockReturnValue({
+        observations: mockObs as never,
+        loading: false,
+        error: null,
+        create: createMock,
+        update: jest.fn(),
+        remove: jest.fn(),
+        refresh: jest.fn(),
+      });
+
+      render(<ObservationsScreen {...fakeObsProps} />);
+      fireEvent.press(screen.getByTestId('add-observation-button'));
+      // Solo rellena el título, falta "body"
+      fireEvent.changeText(screen.getByTestId('title-input'), 'Saturno');
+      await act(async () => {
+        fireEvent.press(screen.getByTestId('save-observation-button'));
+      });
+      expect(createMock).not.toHaveBeenCalled();
+    });
+
+    it('abre el diálogo de confirmación al pulsar eliminar', () => {
+      const { Alert } = require('react-native');
+      jest.spyOn(Alert, 'alert');
+
+      render(<ObservationsScreen {...fakeObsProps} />);
+      fireEvent.press(screen.getByTestId('delete-observation-1'));
+      expect(Alert.alert).toHaveBeenCalledWith(
+        'Eliminar observación',
+        expect.stringContaining('¿Seguro'),
+        expect.any(Array),
+      );
+
+      jest.restoreAllMocks();
+    });
+
+    it('llama a remove al confirmar la eliminación en el Alert', () => {
+      const removeMock = jest.fn().mockResolvedValue(true);
+      mockObservations.mockReturnValue({
+        observations: mockObs as never,
+        loading: false,
+        error: null,
+        create: jest.fn(),
+        update: jest.fn(),
+        remove: removeMock,
+        refresh: jest.fn(),
+      });
+
+      const { Alert } = require('react-native');
+      // Intercepta Alert.alert y llama directamente al botón "Eliminar"
+      jest.spyOn(Alert, 'alert').mockImplementation((_title, _msg, buttons) => {
+        const confirmBtn = (buttons as { text: string; onPress?: () => void }[])
+          .find((b) => b.text === 'Eliminar');
+        confirmBtn?.onPress?.();
+      });
+
+      render(<ObservationsScreen {...fakeObsProps} />);
+      fireEvent.press(screen.getByTestId('delete-observation-1'));
+      expect(removeMock).toHaveBeenCalledWith('1');
+
+      jest.restoreAllMocks();
+    });
   });
 
   describe('manejo de errores', () => {
@@ -310,6 +463,7 @@ describe('ObservationsScreen', () => {
         loading: false,
         error: 'Error al cargar observaciones',
         create: jest.fn(),
+        update: jest.fn(),
         remove: jest.fn(),
         refresh: jest.fn(),
       });

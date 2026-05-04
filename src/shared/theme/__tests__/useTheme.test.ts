@@ -14,7 +14,7 @@ import { COLORS_DARK, COLORS_LIGHT } from '../colors';
 describe('useTheme', () => {
   describe('modo oscuro (predeterminado)', () => {
     it('usa paleta dark cuando el esquema es null', () => {
-      jest.spyOn(RN, 'useColorScheme').mockReturnValue(null);
+      jest.spyOn(RN, 'useColorScheme').mockReturnValue('unspecified');
       const { result } = renderHook(() => useTheme());
       expect(result.current.isDark).toBe(true);
       expect(result.current.colors).toBe(COLORS_DARK);
@@ -28,13 +28,13 @@ describe('useTheme', () => {
     });
 
     it('expone el color primario cian estelar', () => {
-      jest.spyOn(RN, 'useColorScheme').mockReturnValue(null);
+      jest.spyOn(RN, 'useColorScheme').mockReturnValue('unspecified');
       const { result } = renderHook(() => useTheme());
       expect(result.current.colors.primary).toBe('#4fc3f7');
     });
 
     it('expone el fondo oscuro del espacio', () => {
-      jest.spyOn(RN, 'useColorScheme').mockReturnValue(null);
+      jest.spyOn(RN, 'useColorScheme').mockReturnValue('unspecified');
       const { result } = renderHook(() => useTheme());
       expect(result.current.colors.background).toBe('#050d24');
     });

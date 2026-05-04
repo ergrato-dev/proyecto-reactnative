@@ -88,7 +88,7 @@ export async function clearApodCache(): Promise<void> {
   try {
     const keys = await listApodCacheKeys();
     if (keys.length > 0) {
-      await AsyncStorage.removeMany(keys);
+      await AsyncStorage.multiRemove(keys);
     }
   } catch {
     // Error de borrado: silencioso

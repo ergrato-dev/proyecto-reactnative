@@ -3,7 +3,9 @@
  *
  * @what Formulario de email + contraseña con validación Zod. Incluye botón
  *   de autenticación biométrica (huella / Face ID) si el hardware está
- *   disponible y el usuario ya inició sesión previamente.
+ *   disponible y el usuario ya inició sesión previamente. Tras 3 fallos
+ *   biométricos consecutivos el botón se oculta y se muestra un aviso para
+ *   usar la contraseña (criterio de aceptación HU-12).
  * @why El módulo auth demuestra el flujo completo de autenticación con
  *   Supabase: registro, login, biometría y persistencia de sesión segura.
  * @impact Usa `useAuthActions` para delegar la lógica de Supabase y
@@ -174,7 +176,8 @@ export function LoginScreen({ navigation }: Props) {
           )}
         </TouchableOpacity>
 
-        {biometrics.isAvailable && (
+        {/* Botón biométrico: visible solo si está disponible Y no está bloqueado (HU-12) */}
+        {biometrics.isAvailable && !biometrics.isLocked && (
           <TouchableOpacity
             style={styles.biometricButton}
             onPress={handleBiometricLogin}
@@ -185,6 +188,18 @@ export function LoginScreen({ navigation }: Props) {
               🔑 Usar {biometrics.biometryType ?? 'biometría'}
             </Text>
           </TouchableOpacity>
+        )}
+
+        {/* Aviso de bloqueo biométrico: aparece tras 3 fallos consecutivos (HU-12) */}
+        {biometrics.isLocked && (
+          <View style={styles.lockBanner} testID="biometric-locked-banner">
+            <Text style={styles.lockBannerText}>
+              Has superado el límite de intentos biométricos. Usa tu contraseña.
+            </Text>
+            <TouchableOpacity onPress={biometrics.resetLock} testID="biometric-reset-button">
+              <Text style={styles.linkText}>Reintentar biometría</Text>
+            </TouchableOpacity>
+          </View>
         )}
 
         <TouchableOpacity
@@ -261,6 +276,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(21,101,192,0.12)',
   },
   biometricButtonText: { color: '#4fc3f7', fontSize: 15 },
+  lockBanner: {
+    width: '100%',
+    backgroundColor: 'rgba(230,81,0,0.15)',
+    borderRadius: 10,
+    padding: 14,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#e65100',
+    alignItems: 'center',
+    gap: 8,
+  },
+  lockBannerText: { color: '#ffb74d', fontSize: 13, textAlign: 'center' },
   linkButton: { marginTop: 8 },
   linkText: { color: '#4fc3f7', fontSize: 14 },
 });

@@ -135,4 +135,34 @@ describe('OrbitScreen', () => {
     expect(screen.queryByTestId('planet-label-mercury')).toBeNull();
     expect(screen.queryByTestId('planet-label-venus')).toBeNull();
   });
+
+  it('muestra el texto "Reanudar" cuando isPlaying = false', () => {
+    mockIsPlaying = false;
+    render(<OrbitScreen {...makeDrawerProps()} />);
+    expect(screen.getByText(/Reanudar/i)).toBeTruthy();
+  });
+
+  it('al presionar Reanudar se llama resume() en cada planeta (4 veces)', () => {
+    mockIsPlaying = false;
+    render(<OrbitScreen {...makeDrawerProps()} />);
+    fireEvent.press(screen.getByTestId('pause-resume-button'));
+    expect(mockResume).toHaveBeenCalledTimes(4);
+  });
+
+  it('al tocar un planeta aparece el panel de información con el nombre', () => {
+    render(<OrbitScreen {...makeDrawerProps()} />);
+    // OrbitingPlanet renderiza un TouchableOpacity con accessibilityRole="button"
+    // y accessibilityLabel="Ver detalles de {name}". Se usa getByRole para
+    // llegar al elemento correcto sin depender del Animated.View contenedor.
+    fireEvent.press(screen.getByRole('button', { name: /Ver detalles de Mercurio/i }));
+    // El panel de info debe aparecer; se verifica por testID para evitar
+    // ambigüedad con el nombre en la leyenda inferior.
+    expect(screen.getByTestId('planet-label-mercury')).toBeTruthy();
+  });
+
+  it('el panel de información muestra el período orbital del planeta seleccionado', () => {
+    render(<OrbitScreen {...makeDrawerProps()} />);
+    fireEvent.press(screen.getByRole('button', { name: /Ver detalles de Tierra/i }));
+    expect(screen.getByText(/Período orbital/i)).toBeTruthy();
+  });
 });

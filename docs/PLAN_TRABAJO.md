@@ -294,6 +294,123 @@
 
 ---
 
+## Fase 14 — Correcciones post-auditoría (3 mayo 2026)
+
+> Auditoría completa realizada el 2026-05-03 comparando estado real del código contra RFs, HUs, RNFs y restricciones.
+> Todos los ítems de esta fase son **bloqueantes** para la entrega: incumplían RC-04.3, RC-05.1, RC-05.2 o RNF-08.1.
+
+### 14.1 Bug de producción — `AsyncStorage.removeMany` inexistente
+> **Origen:** `src/modules/storage/hooks/useApod.ts` L91 llama a `AsyncStorage.removeMany(keys)`.
+> `removeMany` no existe en la API de `@react-native-async-storage/async-storage`; la función correcta es `multiRemove(keys)`.
+> Impacto: el botón "Borrar caché" de `CacheManagementScreen` lanza `TypeError` en runtime.
+> **RF afectado:** RF-STOR-04 | **RNF afectado:** RNF-08.1
+
+- [x] Reemplazar `AsyncStorage.removeMany(keys)` por `AsyncStorage.multiRemove(keys)` en `useApod.ts` L91 — ✅ 2026-05-03
+- [x] Corregir el mismo error en `useApod.test.tsx` (mock de `removeMany` → `multiRemove`) — ✅ 2026-05-03
+- [x] Verificar `pnpm tsc --noEmit` sin error TS2339 en `useApod.ts` — ✅ 2026-05-03
+- [x] Commit: `fix(storage): replace non-existent AsyncStorage.removeMany with multiRemove` — ✅ 2026-05-03
+
+### 14.2 Errores TypeScript — 17 errores en 4 archivos
+> **Origen:** `pnpm tsc --noEmit` reportó 17 errores tras la auditoría del 2026-05-03.
+> Incumple RC-05.2 y RNF-08.1.
+
+- [x] **`authScreens.test.tsx`**: corregir 9 errores TS2345 en mocks de `UseAuthActionsResult` / `UseObservationsResult` — ✅ 2026-05-03
+- [x] **`authScreens.test.tsx`**: eliminar import no usado `waitFor` (TS6133 + ESLint `no-unused-vars`) — ✅ 2026-05-03
+- [x] **`APODGalleryScreen.test.tsx`**: corregir predicado `find` con `AlertButton.text` — ✅ 2026-05-03
+- [x] **`useTheme.test.ts`**: corregir 3 errores TS2345 — `'unspecified'` en lugar de `null` — ✅ 2026-05-03
+- [x] Verificar `pnpm tsc --noEmit` → 0 errores — ✅ 2026-05-03
+- [x] Verificar `pnpm lint` → 0 errores — ✅ 2026-05-03
+- [x] Commit: `fix(tests): resolve 17 TypeScript errors and 1 ESLint error across test files` — ✅ 2026-05-03
+
+### 14.3 CVE — `@xmldom/xmldom` override a versión aún vulnerable
+> **Origen:** `pnpm.overrides` en `package.json` fija `@xmldom/xmldom` a `"0.8.12"`, pero el parche exige `>=0.8.13`.
+> La versión 0.8.12 sigue siendo vulnerable. `pnpm audit` reporta 4 HIGH activos.
+> Incumple RC-04.3 y RNF-03.5.
+
+- [x] Actualizar `pnpm.overrides["@xmldom/xmldom"]` de `"0.8.12"` a `"0.8.13"` en `package.json` — ✅ 2026-05-03
+- [x] Ejecutar `pnpm install` para regenerar `pnpm-lock.yaml` — ✅ 2026-05-03
+- [x] Verificar `pnpm audit --audit-level high` → 0 vulnerabilidades high o critical — ✅ 2026-05-03
+- [x] `postcss` (<8.5.10, moderate) y `uuid` (<14.0.0, low) son transitivas de Expo SDK 55 sin fix disponible — aceptadas — ✅ 2026-05-03
+- [x] Commit: `fix(security): bump @xmldom/xmldom override to 0.8.13 to patch 4 HIGH CVEs` — ✅ 2026-05-03
+
+### 14.4 Cobertura — 7 agrupaciones por debajo del 80%
+> **Origen:** `pnpm test --coverage` del 2026-05-03.
+> Incumple RC-05.1 y RNF-04.1.
+
+| Archivo / Carpeta | Stmts | Branches | Funcs | Lines |
+|---|---|---|---|---|
+| `animations/components` (OrbitingPlanet.tsx) | 45% | 100% | 25% | 45% |
+| `animations/screens` (OrbitScreen.tsx) | 77% | 50% | 50% | 84% |
+| `auth/screens` (Login/Register/Observations) | 78% | 67% | 64% | 81% |
+| `camera/screens` (ARConstellationScreen.tsx) | 61% | 57% | 50% | 64% |
+| `storage/screens` (APODDetailScreen: 52% stmts) | 73% | 70% | 86% | 76% |
+| `navigation/screens/ISSMapScreen.tsx` | 0% | 100% | 0% | 0% |
+| `storage/components` (ApodMedia.tsx) | 71% | 67% | 33% | 71% |
+
+- [x] Añadir tests a `OrbitingPlanet.tsx` (5 tests, 0%→100%) — ✅ 2026-05-03
+- [x] Añadir tests a `OrbitScreen.tsx` (4 tests nuevos, branches 50%→100%) — ✅ 2026-05-03
+- [x] Añadir tests a `auth/screens` (7 tests nuevos + 2 HU-12 lockout) — ✅ 2026-05-03
+- [x] Añadir tests a `ARConstellationScreen.tsx` (3 tests nuevos) — ✅ 2026-05-03
+- [x] Añadir tests a `APODDetailScreen.tsx` (4 tests handleShare) — ✅ 2026-05-03
+- [x] Añadir test a `navigation/screens/ISSMapScreen.tsx` (3 tests, 0%→93%) — ✅ 2026-05-03
+- [x] Añadir tests a `ApodMedia.tsx` (10 tests, 71%→100%) — ✅ 2026-05-03
+- [x] Verificar `pnpm test --coverage` → todos los módulos ≥ 80% — ✅ 2026-05-03 (494 tests · 52 suites)
+- [x] Commit: `test(coverage): add missing tests to reach ≥80% coverage in all modules` — ✅ 2026-05-03
+
+### 14.5 RF-NOTIF-03 — Alerta de paso ISS sin implementar
+> **Origen:** Auditoría del 2026-05-03.
+> `NOTIFICATION_IDENTIFIERS.ISS_PASS` existe como constante pero no hay ninguna función que:
+> (a) solicite geolocalización, (b) calcule si la ISS pasa a ≤ 500 km, (c) programe la notificación.
+> El toggle "ISS próximamente" en `NotificationSettingsScreen` no tiene efecto funcional.
+> **RF afectado:** RF-NOTIF-03
+
+- [ ] Instalar `expo-location@18.1.5` con versión exacta y auditar
+- [ ] Implementar `scheduleIssPassAlert(userLat, userLon)` en `notificationScheduler.ts`: obtiene posición ISS actual, calcula distancia haversine, si ≤ 500 km programa notificación local
+- [ ] Conectar `useNotificationPermission` con permiso de localización (`expo-location`)
+- [ ] Activar el toggle ISS en `NotificationSettingsScreen`: solicitar permiso de ubicación y llamar `scheduleIssPassAlert`
+- [ ] Tests: distancia > 500 km (no notifica), distancia ≤ 500 km (notifica), permiso ubicación denegado
+- [ ] Cobertura ≥ 80% en código nuevo
+- [ ] Commit: `feat(notifications): implement ISS pass alert with geolocation (RF-NOTIF-03)`
+
+### 14.6 RC-02.3 — HTTP cleartext Open-Notify sin configurar en Android 9+
+> **Origen:** `issClient.ts` usa `http://api.open-notify.org` (plain HTTP).
+> Android 9 (API 28+) bloquea tráfico HTTP por defecto. Sin `usesCleartextTraffic`,
+> las peticiones a Open-Notify fallan silenciosamente en producción.
+> **Restricción afectada:** RC-02.3
+
+- [x] Añadir `"usesCleartextTraffic": true` en el bloque `android` de `app.json` — ✅ 2026-05-03
+- [x] Commit: `fix(android): enable cleartext traffic for Open-Notify HTTP API (RC-02.3)` — ✅ 2026-05-03
+
+### 14.7 HU-12 — Fallback tras 3 intentos biométricos fallidos sin implementar
+> **Origen:** Auditoría del 2026-05-03.
+> `useBiometrics.ts` no tiene contador de intentos fallidos.
+> Criterio de aceptación HU-12: "Si la biometría falla 3 veces, se solicita la contraseña".
+> **HU afectada:** HU-12
+
+- [x] Añadir estado `failCount` en `useBiometrics` hook — ✅ 2026-05-03
+- [x] Incrementar contador en cada resultado `success: false` — ✅ 2026-05-03
+- [x] Exponer `isLocked: boolean` (failCount >= 3) y `resetLock()` en el return del hook — ✅ 2026-05-03
+- [x] En `LoginScreen`: ocultar botón biométrico cuando `isLocked === true`, mostrar banner con `resetLock` — ✅ 2026-05-03
+- [x] Tests: banner de bloqueo visible con isLocked=true, resetLock llamado al pulsar botón — ✅ 2026-05-03 (31 tests)
+- [x] Commit: `fix(auth): implement 3-strike lockout on biometric failure (HU-12)` — ✅ 2026-05-03
+
+### 14.8 HU-16 — Historia de usuario Artemis sin documentar
+> **Origen:** Fase 6 del plan indicó "Añadir HU-16 a `user-stories.md`" pero nunca se hizo.
+> `user-stories.md` solo llega hasta HU-15.
+
+- [x] Añadir HU-16 en `docs/requirements/user-stories.md` con criterios de aceptación del módulo Artemis — ✅ 2026-05-03
+- [x] Verificar coherencia con RF-ART-01 al RF-ART-04 — ✅ 2026-05-03
+- [x] Commit: `docs(requirements): add HU-16 Artemis mission showcase to user-stories` — ✅ 2026-05-03
+
+### 14.9 Commit de cierre post-auditoría
+- [x] `pnpm tsc --noEmit` → 0 errores — ✅ 2026-05-03
+- [x] `pnpm lint` → 0 errores — ✅ 2026-05-03
+- [x] `pnpm test --coverage` → 494 tests · 52 suites · todos ≥ 80% — ✅ 2026-05-03
+- [x] `pnpm audit --audit-level high` → 0 CVEs high/critical (1 low + 2 moderate transitivas aceptadas) — ✅ 2026-05-03
+- [x] Commit: `fix(quality): resolve post-audit blockers 14.1-14.8 (TS, coverage, CVEs, HU-12, HU-16)` — ✅ 2026-05-03
+
+---
+
 ## Resumen de progreso
 
 | Fase | Módulo | Estado |
@@ -311,6 +428,7 @@
 | 10 | Animaciones | ✅ Completo |
 | 11 | Platform showcase | ✅ Completo |
 | 12 | Cámara AR ⚡ | ✅ Completo |
-| 13 | Pulido y entrega | ✅ Completo |
+| 13 | Pulido y entrega | 🟡 En progreso |
+| 14 | Correcciones post-auditoría | ✅ Completo |
 
 **Leyenda:** ✅ Completo · 🟡 En progreso · ⬜ Pendiente · ⚡ Stretch goal

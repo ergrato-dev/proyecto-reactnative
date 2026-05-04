@@ -22,7 +22,7 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
   setItem: jest.fn(),
   removeItem: jest.fn(),
   getAllKeys: jest.fn(),
-  removeMany: jest.fn(),
+  multiRemove: jest.fn(),
   clear: jest.fn(),
 }));
 
@@ -186,7 +186,7 @@ describe('persistApod y readPersistedApod', () => {
 
 describe('listApodCacheKeys y clearApodCache', () => {
   const mockGetAllKeys = AsyncStorage.getAllKeys as jest.Mock;
-  const mockRemoveMany = AsyncStorage.removeMany as jest.Mock;
+  const mockRemoveMany = AsyncStorage.multiRemove as jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -214,14 +214,14 @@ describe('listApodCacheKeys y clearApodCache', () => {
     expect(keys).toEqual([]);
   });
 
-  it('debería llamar a removeMany con las claves APOD al limpiar', async () => {
+  it('debería llamar a multiRemove con las claves APOD al limpiar', async () => {
     mockGetAllKeys.mockResolvedValue(['apod:2025-01-01', 'apod:2025-01-02']);
     mockRemoveMany.mockResolvedValue(undefined);
     await clearApodCache();
     expect(mockRemoveMany).toHaveBeenCalledWith(['apod:2025-01-01', 'apod:2025-01-02']);
   });
 
-  it('debería no llamar a removeMany si no hay claves APOD', async () => {
+  it('debería no llamar a multiRemove si no hay claves APOD', async () => {
     mockGetAllKeys.mockResolvedValue(['favorites:planets']);
     await clearApodCache();
     expect(mockRemoveMany).not.toHaveBeenCalled();

@@ -131,7 +131,7 @@ describe('APODGalleryScreen', () => {
       // Interceptar Alert.alert y llamar inmediatamente al handler "Borrar"
       jest.spyOn(Alert, 'alert').mockImplementation((_title, _msg, buttons) => {
         const confirmBtn = (buttons ?? []).find(
-          (b: { text: string }) => b.text === 'Borrar',
+          (b) => b.text === 'Borrar',
         ) as { onPress?: () => void } | undefined;
         confirmBtn?.onPress?.();
       });
@@ -150,7 +150,7 @@ describe('APODGalleryScreen', () => {
     it('vacía la lista después de confirmar el borrado', async () => {
       jest.spyOn(Alert, 'alert').mockImplementation((_title, _msg, buttons) => {
         const confirmBtn = (buttons ?? []).find(
-          (b: { text: string }) => b.text === 'Borrar',
+          (b) => b.text === 'Borrar',
         ) as { onPress?: () => void } | undefined;
         confirmBtn?.onPress?.();
       });
