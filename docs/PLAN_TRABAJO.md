@@ -364,13 +364,13 @@
 > El toggle "ISS próximamente" en `NotificationSettingsScreen` no tiene efecto funcional.
 > **RF afectado:** RF-NOTIF-03
 
-- [ ] Instalar `expo-location@18.1.5` con versión exacta y auditar
-- [ ] Implementar `scheduleIssPassAlert(userLat, userLon)` en `notificationScheduler.ts`: obtiene posición ISS actual, calcula distancia haversine, si ≤ 500 km programa notificación local
-- [ ] Conectar `useNotificationPermission` con permiso de localización (`expo-location`)
-- [ ] Activar el toggle ISS en `NotificationSettingsScreen`: solicitar permiso de ubicación y llamar `scheduleIssPassAlert`
-- [ ] Tests: distancia > 500 km (no notifica), distancia ≤ 500 km (notifica), permiso ubicación denegado
-- [ ] Cobertura ≥ 80% en código nuevo
-- [ ] Commit: `feat(notifications): implement ISS pass alert with geolocation (RF-NOTIF-03)`
+- [x] Instalar `expo-location@18.1.5` con versión exacta y auditar — ✅ 2026-05-03
+- [x] Implementar `scheduleIssPassAlert(userLat, userLon)` en `notificationScheduler.ts`: obtiene posición ISS actual, calcula distancia haversine, si ≤ 500 km programa notificación local — ✅ 2026-05-03
+- [x] Conectar `useNotificationPermission` con permiso de localización (`expo-location`) — ✅ 2026-05-03
+- [x] Activar el toggle ISS en `NotificationSettingsScreen`: solicitar permiso de ubicación y llamar `scheduleIssPassAlert` — ✅ 2026-05-03
+- [x] Tests: distancia > 500 km (no notifica), distancia ≤ 500 km (notifica), permiso ubicación denegado — ✅ 2026-05-03
+- [x] Cobertura ≥ 80% en código nuevo — ✅ 2026-05-03 (notifications/lib 97.77%, notifications/screens 87.17%)
+- [x] Commit: `feat(notifications): implement ISS pass alert with geolocation (RF-NOTIF-03)` — ✅ 2026-05-03
 
 ### 14.6 RC-02.3 — HTTP cleartext Open-Notify sin configurar en Android 9+
 > **Origen:** `issClient.ts` usa `http://api.open-notify.org` (plain HTTP).

@@ -24,6 +24,7 @@ import {
   SafeAreaView,
   Platform,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import { useDonki } from '../hooks/useDonki';
 import { useNotificationPermission } from '../hooks/useNotificationPermission';
@@ -31,6 +32,8 @@ import {
   scheduleSolarStormAlert,
   scheduleApodDailyReminder,
   cancelApodDailyReminder,
+  scheduleIssPassAlert,
+  cancelIssPassAlert,
 } from '../lib/notificationScheduler';
 import type { DonkiSolarFlare } from '@/shared/lib/nasaClient';
 
@@ -129,6 +132,7 @@ function ToggleRow({
   value,
   disabled = false,
   onValueChange,
+  testID,
 }: {
   icon: string;
   title: string;
@@ -136,6 +140,7 @@ function ToggleRow({
   value: boolean;
   disabled?: boolean;
   onValueChange: (val: boolean) => void;
+  testID?: string;
 }) {
   return (
     <View style={styles.toggleRow}>
@@ -152,6 +157,7 @@ function ToggleRow({
         disabled={disabled}
         trackColor={{ false: '#37474f', true: '#0288d1' }}
         thumbColor={value ? '#e1f5fe' : '#90a4ae'}
+        testID={testID}
       />
     </View>
   );
@@ -171,6 +177,7 @@ function ToggleRow({
  */
 export function NotificationSettingsScreen() {
   const [solarAlertsEnabled, setSolarAlertsEnabled] = useState(false);
+  const [issEnabled, setIssEnabled] = useState(false);
   const [apodEnabled, setApodEnabled] = useState(false);
 
   const { flares, majorFlares, isLoading, isError } = useDonki();
@@ -193,6 +200,42 @@ export function NotificationSettingsScreen() {
     setSolarAlertsEnabled(enabled);
     if (enabled && isPushSupported) {
       await scheduleSolarStormAlert(flares).catch(() => null);
+    }
+  }
+
+  /**
+   * Maneja el toggle de alertas de paso de la ISS (RF-NOTIF-03).
+   *
+   * @what Si se activa, solicita permiso de localización y comprueba si la ISS
+   *   está a ≤ 500 km del usuario para enviar una notificación inmediata.
+   *   Si se desactiva, cancela cualquier alerta ISS pendiente.
+   * @why Dar al usuario control sobre las alertas de paso ISS; la notificación
+   *   solo tiene sentido si la ISS está en rango en el momento de activación.
+   * @impact Llama a `scheduleIssPassAlert` que solicita permiso de ubicación.
+   *   Si el permiso es denegado, revierte el toggle y muestra un Alert.
+   *
+   * @param enabled - Nuevo estado del toggle
+   */
+  async function handleIssToggle(enabled: boolean): Promise<void> {
+    if (!enabled) {
+      setIssEnabled(false);
+      await cancelIssPassAlert().catch(() => null);
+      return;
+    }
+    setIssEnabled(true);
+    try {
+      const id = await scheduleIssPassAlert();
+      if (id === null) {
+        // ISS fuera del umbral: toggle activo pero sin notificación inmediata
+      }
+    } catch {
+      // Si el permiso de ubicación fue denegado, revertir el toggle
+      setIssEnabled(false);
+      Alert.alert(
+        'Permiso de ubicación requerido',
+        'Para recibir alertas de paso ISS necesitamos acceder a tu ubicación. Activa el permiso en los ajustes del dispositivo.',
+        [{ text: 'Entendido' }],
+      );
     }
   }
 
@@ -253,10 +296,15 @@ export function NotificationSettingsScreen() {
               <ToggleRow
                 icon="🛰️"
                 title="Paso de la ISS"
-                subtitle="Próximamente"
-                value={false}
-                disabled
-                onValueChange={() => null}
+                subtitle={
+                  isPushSupported
+                    ? 'Alerta cuando la ISS está a ≤ 500 km de tu posición'
+                    : 'No disponible en Web'
+                }
+                value={issEnabled}
+                disabled={!isPushSupported || (!isGranted && !isPermissionLoading)}
+                onValueChange={handleIssToggle}
+                testID="iss-toggle"
               />
               <View style={styles.divider} />
               <ToggleRow

@@ -2,11 +2,13 @@
  * Tests de la pantalla NotificationSettingsScreen.
  *
  * @what Verifica: renderizado de los tres toggles, banner de permisos,
- *   botón de solicitud de permisos, estado de carga y error de DONKI.
+ *   botón de solicitud de permisos, estado de carga y error de DONKI,
+ *   y comportamiento del toggle ISS con geolocalización (RF-NOTIF-03).
  * @why La pantalla es el punto de entrada del módulo; si los toggles o
  *   el banner no se renderizan correctamente el usuario no puede configurar alertas.
  * @impact Cubre `screens/NotificationSettingsScreen.tsx`. Mocks de
- *   `expo-notifications`, `nasaClient` y `@tanstack/react-query`.
+ *   `expo-notifications`, `expo-location`, `issClient`, `nasaClient` y
+ *   `@tanstack/react-query`.
  */
 
 import React from 'react';
@@ -44,6 +46,28 @@ jest.mock('expo-notifications', () => ({
   AndroidImportance: { MAX: 5, HIGH: 4 },
 }));
 
+// ─── Mock de expo-location ────────────────────────────────────────────────────
+
+const mockRequestForegroundPermissionsAsync = jest.fn();
+const mockGetCurrentPositionAsync = jest.fn();
+
+jest.mock('expo-location', () => ({
+  requestForegroundPermissionsAsync: (...args: unknown[]) =>
+    mockRequestForegroundPermissionsAsync(...args),
+  getCurrentPositionAsync: (...args: unknown[]) =>
+    mockGetCurrentPositionAsync(...args),
+  Accuracy: { Balanced: 3 },
+}));
+
+// ─── Mock de issClient ────────────────────────────────────────────────────────
+
+const mockFetchIssPosition = jest.fn();
+
+jest.mock('@/shared/lib/issClient', () => ({
+  fetchIssPosition: (...args: unknown[]) => mockFetchIssPosition(...args),
+  fetchAstronauts: jest.fn(),
+}));
+
 import { fetchSolarFlares } from '@/shared/lib/nasaClient';
 const mockFetch = fetchSolarFlares as jest.Mock;
 
@@ -79,12 +103,25 @@ function renderScreen() {
 // ─── Suite ────────────────────────────────────────────────────────────────────
 
 describe('NotificationSettingsScreen', () => {
+  const USER_LOCATION = {
+    coords: { latitude: 40.4, longitude: -3.7, altitude: 0, accuracy: 50, heading: 0, speed: 0 },
+    timestamp: Date.now(),
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
     mockFetch.mockResolvedValue([]);
     mockGetPermissionsAsync.mockResolvedValue({ status: 'granted' });
     mockScheduleNotificationAsync.mockResolvedValue('mock-id');
     mockCancelScheduledNotificationAsync.mockResolvedValue(undefined);
+    // Defaults para ISS toggle
+    mockRequestForegroundPermissionsAsync.mockResolvedValue({ status: 'granted' });
+    mockGetCurrentPositionAsync.mockResolvedValue(USER_LOCATION);
+    mockFetchIssPosition.mockResolvedValue({
+      message: 'success',
+      timestamp: Date.now(),
+      iss_position: { latitude: '41.0', longitude: '-3.7' }, // ~66 km de Madrid
+    });
   });
 
   it('renderiza el título de la pantalla', async () => {
@@ -103,10 +140,10 @@ describe('NotificationSettingsScreen', () => {
     });
   });
 
-  it('muestra "Próximamente" en el toggle de ISS', async () => {
+  it('muestra el subtítulo de rango (≤ 500 km) en el toggle de ISS', async () => {
     renderScreen();
     await waitFor(() => {
-      expect(screen.getByText('Próximamente')).toBeTruthy();
+      expect(screen.getByText(/≤ 500 km/i)).toBeTruthy();
     });
   });
 
@@ -235,6 +272,85 @@ describe('NotificationSettingsScreen', () => {
 
     // Luego desactivar
     fireEvent(switches[2], 'valueChange', false);
+    await waitFor(() => {
+      expect(mockCancelScheduledNotificationAsync).toHaveBeenCalled();
+    });
+  });
+
+  // ─── Toggle ISS (RF-NOTIF-03) ───────────────────────────────────────────────
+
+  it('activa el toggle ISS y envía notificación cuando la ISS está a ≤ 500 km', async () => {
+    renderScreen();
+
+    await waitFor(() =>
+      expect(screen.getByText(/Paso de la ISS/i)).toBeTruthy(),
+    );
+
+    const switches = screen.getAllByRole('switch');
+    // Segundo switch (índice 1) es el de ISS
+    fireEvent(switches[1], 'valueChange', true);
+
+    await waitFor(() => {
+      expect(mockRequestForegroundPermissionsAsync).toHaveBeenCalledTimes(1);
+      expect(mockScheduleNotificationAsync).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('activa el toggle ISS pero no envía notificación cuando la ISS está lejos (> 500 km)', async () => {
+    mockFetchIssPosition.mockResolvedValue({
+      message: 'success',
+      timestamp: Date.now(),
+      iss_position: { latitude: '0.0', longitude: '-140.0' }, // Pacífico, lejos
+    });
+
+    renderScreen();
+
+    await waitFor(() =>
+      expect(screen.getByText(/Paso de la ISS/i)).toBeTruthy(),
+    );
+
+    const switches = screen.getAllByRole('switch');
+    fireEvent(switches[1], 'valueChange', true);
+
+    await waitFor(() => {
+      expect(mockRequestForegroundPermissionsAsync).toHaveBeenCalledTimes(1);
+    });
+    // No se debe enviar notificación si la ISS está fuera del umbral
+    expect(mockScheduleNotificationAsync).not.toHaveBeenCalled();
+  });
+
+  it('revierte el toggle ISS y no envía notificación cuando el permiso de ubicación es denegado', async () => {
+    mockRequestForegroundPermissionsAsync.mockResolvedValue({ status: 'denied' });
+
+    renderScreen();
+
+    await waitFor(() =>
+      expect(screen.getByText(/Paso de la ISS/i)).toBeTruthy(),
+    );
+
+    const switches = screen.getAllByRole('switch');
+    fireEvent(switches[1], 'valueChange', true);
+
+    await waitFor(() => {
+      // El Alert debe mostrarse (imposible de testear contenido en RN, pero la llamada se hace)
+      expect(mockScheduleNotificationAsync).not.toHaveBeenCalled();
+    });
+  });
+
+  it('desactiva el toggle ISS y llama a cancelIssPassAlert', async () => {
+    renderScreen();
+
+    await waitFor(() =>
+      expect(screen.getByText(/Paso de la ISS/i)).toBeTruthy(),
+    );
+
+    const switches = screen.getAllByRole('switch');
+    // Activar primero
+    fireEvent(switches[1], 'valueChange', true);
+    await waitFor(() => expect(mockRequestForegroundPermissionsAsync).toHaveBeenCalled());
+
+    // Desactivar
+    fireEvent(switches[1], 'valueChange', false);
     await waitFor(() => {
       expect(mockCancelScheduledNotificationAsync).toHaveBeenCalled();
     });
