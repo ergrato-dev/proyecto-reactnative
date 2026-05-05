@@ -14,6 +14,7 @@
 
 import { createClient } from '@supabase/supabase-js';
 import * as SecureStore from 'expo-secure-store';
+import { Platform } from 'react-native';
 import type { SupabaseClientOptions } from '@supabase/supabase-js';
 
 // ─── Validación de variables de entorno ──────────────────────────────────────
@@ -35,16 +36,29 @@ if (!supabaseUrl || !supabaseAnonKey) {
  *
  * @what Implementa la interfaz `storage` de Supabase usando el almacenamiento
  *   cifrado del sistema operativo (Keychain en iOS, Keystore en Android).
+ *   En Web usa `localStorage` como fallback, ya que `expo-secure-store` no
+ *   tiene implementación para el entorno de navegador.
  * @why Guardar tokens JWT en AsyncStorage (sin cifrar) es una vulnerabilidad de
  *   seguridad. expo-secure-store cifra los valores antes de persistirlos.
+ *   En Web, `localStorage` es la opción estándar del navegador para persistir
+ *   datos de sesión; no existe equivalente al Keystore nativo.
  * @impact Solo aplica en dispositivos nativos (Android/iOS). En Web, Supabase
  *   usa `localStorage` como fallback automático.
  */
-const secureStoreAdapter = {
-  getItem: (key: string) => SecureStore.getItemAsync(key),
-  setItem: (key: string, value: string) => SecureStore.setItemAsync(key, value),
-  removeItem: (key: string) => SecureStore.deleteItemAsync(key),
-};
+const secureStoreAdapter =
+  Platform.OS === 'web'
+    ? {
+        // En web, expo-secure-store no está disponible → usar localStorage del navegador
+        getItem: (key: string): string | null => localStorage.getItem(key),
+        setItem: (key: string, value: string): void => localStorage.setItem(key, value),
+        removeItem: (key: string): void => localStorage.removeItem(key),
+      }
+    : {
+        // En Android/iOS, usar almacenamiento cifrado del sistema operativo
+        getItem: (key: string) => SecureStore.getItemAsync(key),
+        setItem: (key: string, value: string) => SecureStore.setItemAsync(key, value),
+        removeItem: (key: string) => SecureStore.deleteItemAsync(key),
+      };
 
 // ─── Opciones del cliente ─────────────────────────────────────────────────────
 
