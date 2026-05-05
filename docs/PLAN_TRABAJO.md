@@ -4,7 +4,7 @@
 **Stack:** Expo SDK 55.0.15 · React Native 0.83 · TypeScript · Supabase · pnpm  
 **Plataformas:** Android → Web → iOS  
 **Narrativa:** planetas · satélites · asteroides · clima espacial · ISS · proyecto Artemis  
-**Última actualización:** Abril 2026 — Fase 8 completada (288 tests · TS clean)
+**Última actualización:** Mayo 2026 — Fases 1-14 completadas (494 tests · TS clean · PR #1 abierto)
 
 > Marcar cada ítem con `[x]` al completarlo.  
 > Añadir la fecha de cierre al final del ítem: `[x] descripción — ✅ 2026-04-16`
