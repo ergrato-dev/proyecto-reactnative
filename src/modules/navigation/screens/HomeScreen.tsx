@@ -121,13 +121,47 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
    * @param moduleId - ID del módulo seleccionado.
    */
   function handleModulePress(moduleId: string) {
-    // En Fase 1 solo navegación está lista; las demás fases irán añadiendo rutas
-    if (moduleId === 'lists') {
-      navigation.navigate('SolarCatalog');
-    } else if (moduleId === 'forms') {
-      navigation.navigate('AsteroidSearch');
+    switch (moduleId) {
+      // ── Stack Explorar (mismo stack que Home) ─────────────────────────────
+      case 'lists':
+        navigation.navigate('SolarCatalog');
+        break;
+      case 'forms':
+        navigation.navigate('AsteroidSearch');
+        break;
+      // ── Tabs inferiores ───────────────────────────────────────────────────
+      case 'maps':
+        navigation.navigate('ISS');
+        break;
+      case 'storage':
+        navigation.navigate('APOD');
+        break;
+      case 'auth':
+        navigation.navigate('Profile');
+        break;
+      // ── Drawer lateral ────────────────────────────────────────────────────
+      case 'animations':
+        navigation.navigate('Animations');
+        break;
+      case 'sensors':
+        navigation.navigate('Sensors');
+        break;
+      case 'camera':
+        navigation.navigate('Camera');
+        break;
+      case 'platform':
+        navigation.navigate('Platform');
+        break;
+      case 'notifications':
+        navigation.navigate('Notifications');
+        break;
+      case 'artemis':
+        navigation.navigate('Artemis');
+        break;
+      // ── Módulos pendientes o sin pantalla propia ───────────────────────────
+      default:
+        break;
     }
-    // Los demás módulos se activarán en sus respectivas fases
   }
 
   return (
