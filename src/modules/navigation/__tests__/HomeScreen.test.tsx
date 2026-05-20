@@ -113,11 +113,12 @@ describe('HomeScreen', () => {
     expect(mockNavigate).toHaveBeenCalledWith('AsteroidSearch');
   });
 
-  it('no debería navegar al pulsar un módulo no implementado', () => {
+  it('no debería navegar al pulsar un módulo sin pantalla propia', () => {
     render(<HomeScreen {...buildNavProps()} />);
-    // 'Animaciones' es fase 4, aún no implementado
-    const animCard = screen.getByTestId('module-card-animations');
-    fireEvent.press(animCard);
+    // El módulo 'navigation' no tiene case en el switch de handleModulePress
+    // (cae al default: break) y no dispara ningún navigate
+    const navCard = screen.getByTestId('module-card-navigation');
+    fireEvent.press(navCard);
     expect(mockNavigate).not.toHaveBeenCalled();
   });
 });

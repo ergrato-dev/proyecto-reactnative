@@ -7,7 +7,7 @@
  * - ObservationsScreen: carga, lista vacía, lista con datos
  */
 import React from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react-native';
+import { render, screen, fireEvent, act, waitFor } from '@testing-library/react-native';
 import { LoginScreen } from '../screens/LoginScreen';
 import { RegisterScreen } from '../screens/RegisterScreen';
 import { ObservationsScreen } from '../screens/ObservationsScreen';
@@ -382,10 +382,11 @@ describe('ObservationsScreen', () => {
       fireEvent.press(screen.getByTestId('add-observation-button'));
       fireEvent.changeText(screen.getByTestId('title-input'), 'Saturno');
       fireEvent.changeText(screen.getByTestId('body-input'), 'planeta');
-      await act(async () => {
-        fireEvent.press(screen.getByTestId('save-observation-button'));
+      // Usar waitFor en lugar de act para evitar timeouts en el handler async
+      fireEvent.press(screen.getByTestId('save-observation-button'));
+      await waitFor(() => {
+        expect(createMock).toHaveBeenCalledTimes(1);
       });
-      expect(createMock).toHaveBeenCalledTimes(1);
       expect(createMock).toHaveBeenCalledWith(
         expect.objectContaining({ title: 'Saturno', body: 'planeta' }),
       );

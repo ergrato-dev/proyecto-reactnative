@@ -131,13 +131,14 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
         break;
       // ── Tabs inferiores ───────────────────────────────────────────────────
       case 'maps':
-        navigation.navigate('ISS');
+        // NavigatorScreenParams requiere la forma objeto en navigate cross-tab
+        navigation.navigate({ name: 'ISS', params: { screen: 'ISSMap' } });
         break;
       case 'storage':
-        navigation.navigate('APOD');
+        navigation.navigate({ name: 'APOD', params: { screen: 'APODDetail' } });
         break;
       case 'auth':
-        navigation.navigate('Profile');
+        navigation.navigate({ name: 'Profile', params: { screen: 'Auth' } });
         break;
       // ── Drawer lateral ────────────────────────────────────────────────────
       case 'animations':
@@ -153,10 +154,11 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
         navigation.navigate('Platform');
         break;
       case 'notifications':
-        navigation.navigate('Notifications');
+        // NavigatorScreenParams requiere la forma objeto en navigate cross-drawer
+        navigation.navigate({ name: 'Notifications', params: { screen: 'NotificationSettings' } });
         break;
       case 'artemis':
-        navigation.navigate('Artemis');
+        navigation.navigate({ name: 'Artemis', params: { screen: 'MissionStatus' } });
         break;
       // ── Módulos pendientes o sin pantalla propia ───────────────────────────
       default:

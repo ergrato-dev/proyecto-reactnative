@@ -4,7 +4,7 @@
 **Stack:** Expo SDK 55.0.15 · React Native 0.83 · TypeScript · Supabase · pnpm  
 **Plataformas:** Android → Web → iOS  
 **Narrativa:** planetas · satélites · asteroides · clima espacial · ISS · proyecto Artemis  
-**Última actualización:** Mayo 2026 — Fases 1-14 completadas (494 tests · TS clean · PR #1 abierto)
+**Última actualización:** Mayo 2026 — Fases 1-14 completadas (508 tests · TS clean · PR #1 mergeado — 2026-05-19)
 
 > Marcar cada ítem con `[x]` al completarlo.  
 > Añadir la fecha de cierre al final del ítem: `[x] descripción — ✅ 2026-04-16`
@@ -290,7 +290,7 @@
 - [x] Verificar que `.env.example` está actualizado con todas las variables
 
 ### 13.4 Commit de cierre
-- [ ] Commit: `docs(project): finalize academic documentation and coverage report`
+- [x] Commit: `docs(project): finalize academic documentation and coverage report` — ✅ 2026-05-19
 
 ---
 
@@ -354,7 +354,7 @@
 - [x] Añadir tests a `APODDetailScreen.tsx` (4 tests handleShare) — ✅ 2026-05-03
 - [x] Añadir test a `navigation/screens/ISSMapScreen.tsx` (3 tests, 0%→93%) — ✅ 2026-05-03
 - [x] Añadir tests a `ApodMedia.tsx` (10 tests, 71%→100%) — ✅ 2026-05-03
-- [x] Verificar `pnpm test --coverage` → todos los módulos ≥ 80% — ✅ 2026-05-03 (494 tests · 52 suites)
+- [x] Verificar `pnpm test --coverage` → todos los módulos ≥ 80% — ✅ 2026-05-03 (508 tests · 52 suites)
 - [x] Commit: `test(coverage): add missing tests to reach ≥80% coverage in all modules` — ✅ 2026-05-03
 
 ### 14.5 RF-NOTIF-03 — Alerta de paso ISS sin implementar
@@ -405,7 +405,7 @@
 ### 14.9 Commit de cierre post-auditoría
 - [x] `pnpm tsc --noEmit` → 0 errores — ✅ 2026-05-03
 - [x] `pnpm lint` → 0 errores — ✅ 2026-05-03
-- [x] `pnpm test --coverage` → 494 tests · 52 suites · todos ≥ 80% — ✅ 2026-05-03
+- [x] `pnpm test --coverage` → 508 tests · 52 suites · todos ≥ 80% — ✅ 2026-05-03
 - [x] `pnpm audit --audit-level high` → 0 CVEs high/critical (1 low + 2 moderate transitivas aceptadas) — ✅ 2026-05-03
 - [x] Commit: `fix(quality): resolve post-audit blockers 14.1-14.8 (TS, coverage, CVEs, HU-12, HU-16)` — ✅ 2026-05-03
 
@@ -428,7 +428,7 @@
 | 10 | Animaciones | ✅ Completo |
 | 11 | Platform showcase | ✅ Completo |
 | 12 | Cámara AR ⚡ | ✅ Completo |
-| 13 | Pulido y entrega | 🟡 En progreso |
+| 13 | Pulido y entrega | ✅ Completo |
 | 14 | Correcciones post-auditoría | ✅ Completo |
 
 **Leyenda:** ✅ Completo · 🟡 En progreso · ⬜ Pendiente · ⚡ Stretch goal
