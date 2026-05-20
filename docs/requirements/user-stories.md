@@ -280,3 +280,24 @@
 
 **Estimación:** S (Pequeña)  
 **Módulo:** `navigation/`
+
+---
+
+### HU-16 — Explorar el estado del programa Artemis
+
+> **Como** entusiasta de la exploración lunar,  
+> **quiero** consultar el estado actual de las misiones Artemis y ver imágenes oficiales de la NASA,  
+> **para** seguir el progreso del programa de regreso a la Luna.
+
+**Criterios de aceptación:**
+- [ ] Se muestra una lista de misiones Artemis (Artemis I, II, III) con: nombre, fecha objetivo, estado (completada / en progreso / planificada) y tripulación cuando aplique.
+- [ ] Cada misión puede expandirse para leer una descripción detallada.
+- [ ] Una galería horizontal muestra imágenes oficiales descargadas de la NASA Images API.
+- [ ] Las imágenes incluyen título y fecha de la foto.
+- [ ] Los datos de misiones se cargan desde una fuente estática integrada en la app (sin depender de una API de misiones en tiempo real que no existe públicamente).
+- [ ] La galería usa TanStack Query con `staleTime` de 6 h para no saturar la API de imágenes.
+- [ ] La sección es accesible desde el Drawer lateral con entrada propia.
+
+**Estimación:** M (Media)  
+**Módulo:** `artemis/`  
+**RFs relacionados:** RF-ART-01, RF-ART-02, RF-ART-03, RF-ART-04
